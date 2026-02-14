@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { ChevronRight, ChevronDown, Book, Shield, Cloud, Terminal } from 'lucide-react';
+import { ChevronRight, ChevronDown, Book, Shield, Cloud, Terminal, Zap, Globe, Puzzle } from 'lucide-react';
+import { useTranslation } from '../i18n/I18nContext';
 
 export interface SidebarItemDef {
   id: string;
@@ -64,6 +65,15 @@ export const SIDEBAR_ITEMS: SidebarSection[] = [
     ]
   },
   {
+    category: 'Advanced Guides',
+    icon: Zap,
+    items: [
+      { id: 'seo-performance', label: 'SEO & Performance' },
+      { id: 'i18n-config', label: 'Internationalization (i18n)' },
+      { id: 'enterprise-plugins', label: 'Enterprise Plugins' },
+    ]
+  },
+  {
     category: 'API Reference',
     icon: Terminal,
     items: [
@@ -88,6 +98,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
   depth = 0 
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const { t } = useTranslation();
   
   const hasChildren = item.items && item.items.length > 0;
   
@@ -112,6 +123,9 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
       onSelectDoc(item.id);
     }
   };
+
+  // Translate label using ID if available, otherwise fallback to label
+  const label = t(`sidebar.${item.id}`);
 
   return (
     <li>
@@ -141,7 +155,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
             if (!isActiveDirectly) e.currentTarget.style.color = 'var(--nexus-text-secondary)';
         }}
       >
-        <span>{item.label}</span>
+        <span>{label === `sidebar.${item.id}` ? item.label : label}</span>
         {hasChildren && (
           <span style={{ color: 'var(--nexus-text-secondary)', display: 'flex' }}>
             {isExpanded ? <ChevronDown size={14} /> : <ChevronRight size={14} />}
@@ -167,6 +181,8 @@ const SidebarItem: React.FC<SidebarItemProps> = ({
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({ activeDoc, onSelectDoc }) => {
+  const { t } = useTranslation();
+
   return (
     <aside style={{
       width: 'var(--sidebar-width)',
@@ -194,7 +210,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ activeDoc, onSelectDoc }) => {
               marginBottom: '0.75rem',
               paddingLeft: '0.5rem'
             }}>
-              {section.category}
+              {t(`sidebar.${section.category}`) === `sidebar.${section.category}` ? section.category : t(`sidebar.${section.category}`)}
             </div>
             
             <ul style={{ listStyle: 'none', padding: 0 }}>

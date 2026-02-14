@@ -1,7 +1,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Search, Moon, Sun, Menu, Github, ChevronDown, MessageSquare, LogOut, User as UserIcon, Settings } from 'lucide-react';
+import { Search, Moon, Sun, Menu, Github, ChevronDown, MessageSquare, LogOut, User as UserIcon, Settings, Globe } from 'lucide-react';
 import { UserProfile } from './AuthModals';
+import { useTranslation } from '../i18n/I18nContext';
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -34,8 +35,12 @@ export const Navbar: React.FC<NavbarProps> = ({
 }) => {
   const [isVersionMenuOpen, setIsVersionMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const versionDropdownRef = useRef<HTMLDivElement>(null);
   const userDropdownRef = useRef<HTMLDivElement>(null);
+  const langDropdownRef = useRef<HTMLDivElement>(null);
+
+  const { t, language, setLanguage } = useTranslation();
 
   const versions = [
     { label: 'v2.4', tag: 'Latest' },
@@ -51,6 +56,9 @@ export const Navbar: React.FC<NavbarProps> = ({
       }
       if (userDropdownRef.current && !userDropdownRef.current.contains(event.target as Node)) {
         setIsUserMenuOpen(false);
+      }
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
+        setIsLangMenuOpen(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -103,9 +111,9 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           <div style={{ display: 'flex', gap: '1.5rem' }} className="desktop-links">
-            <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('docs'); }} style={{ fontSize: '0.9rem', fontWeight: 500, color: 'var(--nexus-text-primary)' }}>Documentation</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('api'); }} style={{ fontSize: '0.9rem', fontWeight: 500, color: 'var(--nexus-text-secondary)' }}>API Reference</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('community'); }} style={{ fontSize: '0.9rem', fontWeight: 500, color: 'var(--nexus-text-secondary)' }}>Community</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('docs'); }} style={{ fontSize: '0.9rem', fontWeight: 500, color: 'var(--nexus-text-primary)' }}>{t('nav.docs')}</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('api'); }} style={{ fontSize: '0.9rem', fontWeight: 500, color: 'var(--nexus-text-secondary)' }}>{t('nav.api')}</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); onNavigate('community'); }} style={{ fontSize: '0.9rem', fontWeight: 500, color: 'var(--nexus-text-secondary)' }}>{t('nav.community')}</a>
           </div>
         </div>
 
@@ -154,7 +162,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 gap: '2px'
               }}>
                 <div style={{ padding: '0.5rem 0.75rem', fontSize: '0.75rem', fontWeight: 700, color: 'var(--nexus-text-secondary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  Select Version
+                  {t('common.selectVersion')}
                 </div>
                 {versions.map((v) => {
                   const isActive = v.label === currentVersion;
@@ -218,8 +226,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             minWidth: '200px'
           }} className="desktop-links">
             <Search size={16} />
-            <span>Search...</span>
-            <span style={{ marginLeft: 'auto', fontSize: '0.75rem', border: '1px solid var(--nexus-border)', padding: '0 4px', borderRadius: '4px' }}>⌘K</span>
+            <span>{t('common.search')}</span>
+            <span style={{ marginLeft: 'auto', fontSize: '0.75rem', border: '1px solid var(--nexus-border)', padding: '0 4px', borderRadius: '4px' }}>{t('common.cmdK')}</span>
           </button>
           
           {/* Mobile Search Icon */}
@@ -231,6 +239,50 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Utilities */}
           <div style={{ display: 'flex', alignItems: 'center' }} className="desktop-links">
+             {/* Language Switcher */}
+            <div style={{ position: 'relative' }} ref={langDropdownRef}>
+              <button 
+                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--nexus-text-secondary)', display: 'flex', padding: '0.5rem' }}
+                title="Switch Language"
+              >
+                <Globe size={20} />
+              </button>
+              {isLangMenuOpen && (
+                <div style={{
+                    position: 'absolute', top: '100%', right: 0,
+                    width: '120px', background: 'var(--nexus-bg-surface)',
+                    border: '1px solid var(--nexus-border)', borderRadius: '8px',
+                    boxShadow: 'var(--shadow-md)', zIndex: 100, overflow: 'hidden'
+                }}>
+                  <button 
+                    onClick={() => { setLanguage('en'); setIsLangMenuOpen(false); }}
+                    style={{ 
+                        width: '100%', padding: '0.5rem 1rem', textAlign: 'left', border: 'none', background: 'transparent',
+                        color: language === 'en' ? 'var(--nexus-primary)' : 'var(--nexus-text-primary)',
+                        fontWeight: language === 'en' ? 600 : 400, cursor: 'pointer'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-surface-hover)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    English
+                  </button>
+                  <button 
+                    onClick={() => { setLanguage('es'); setIsLangMenuOpen(false); }}
+                    style={{ 
+                        width: '100%', padding: '0.5rem 1rem', textAlign: 'left', border: 'none', background: 'transparent',
+                        color: language === 'es' ? 'var(--nexus-primary)' : 'var(--nexus-text-primary)',
+                        fontWeight: language === 'es' ? 600 : 400, cursor: 'pointer'
+                    }}
+                    onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-surface-hover)'}
+                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                  >
+                    Español
+                  </button>
+                </div>
+              )}
+            </div>
+
             <button 
                 onClick={onFeedbackClick}
                 style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--nexus-text-secondary)', display: 'flex', alignItems: 'center', padding: '0.5rem' }}
@@ -289,7 +341,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                             onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-surface-hover)'}
                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                           >
-                             <UserIcon size={16} /> Profile
+                             <UserIcon size={16} /> {t('common.profile')}
                           </button>
                           <button style={{ 
                             width: '100%', padding: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.75rem',
@@ -300,7 +352,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                           onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-surface-hover)'}
                           onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                           >
-                             <Settings size={16} /> Settings
+                             <Settings size={16} /> {t('common.settings')}
                           </button>
                           <div style={{ height: 1, background: 'var(--nexus-border)', margin: '0.5rem 0' }}></div>
                           <button 
@@ -314,7 +366,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                             onMouseEnter={e => e.currentTarget.style.background = 'rgba(239, 68, 68, 0.1)'}
                             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                           >
-                             <LogOut size={16} /> Log Out
+                             <LogOut size={16} /> {t('common.logout')}
                           </button>
                        </div>
                     </div>
@@ -331,7 +383,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       padding: '0.5rem'
                     }}
                   >
-                    Log In
+                    {t('common.login')}
                   </button>
                   <button 
                     onClick={onSignupClick}
@@ -343,7 +395,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                       boxShadow: '0 4px 12px rgba(67, 97, 238, 0.3)'
                     }}
                   >
-                    Sign Up
+                    {t('common.signup')}
                   </button>
                </div>
             )}

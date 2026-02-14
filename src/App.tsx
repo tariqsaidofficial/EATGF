@@ -1,23 +1,29 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import './css/custom.css';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
-import { Home } from './pages/Home';
-import { Documentation } from './pages/Documentation';
 import { PlaceholderPage } from './components/PlaceholderPage';
 import { MobileMenu } from './components/MobileMenu';
 import { SearchModal } from './components/SearchModal';
 import { FeedbackModal } from './components/FeedbackModal';
 import { ChatWidget } from './components/ChatWidget';
 import { AuthModals, UserProfile } from './components/AuthModals';
+import { I18nProvider } from './i18n/I18nContext';
+import { SEO } from './components/SEO';
+import { Loader2 } from 'lucide-react';
 
-// Import New Pages
-import { About } from './pages/About';
-import { Careers } from './pages/Careers';
-import { Contact } from './pages/Contact';
-import { Legal } from './pages/Legal';
-import { Profile, FavoriteItem } from './pages/Profile';
+// Types
+import type { FavoriteItem } from './pages/Profile';
+
+// Lazy Load Pages for Performance
+const Home = lazy(() => import('./pages/Home').then(module => ({ default: module.Home })));
+const Documentation = lazy(() => import('./pages/Documentation').then(module => ({ default: module.Documentation })));
+const About = lazy(() => import('./pages/About').then(module => ({ default: module.About })));
+const Careers = lazy(() => import('./pages/Careers').then(module => ({ default: module.Careers })));
+const Contact = lazy(() => import('./pages/Contact').then(module => ({ default: module.Contact })));
+const Legal = lazy(() => import('./pages/Legal').then(module => ({ default: module.Legal })));
+const Profile = lazy(() => import('./pages/Profile').then(module => ({ default: module.Profile })));
 
 type PageRoute = 
   | 'home' | 'docs' | 'api' | 'changelog' | 'community' 
@@ -25,7 +31,14 @@ type PageRoute =
   | 'features' | 'enterprise' | 'help' | 'about' | 'careers' | 'legal' | 'contact' | 'privacy' | 'terms'
   | 'profile';
 
-export default function App() {
+// Page Loader Component
+const PageLoader = () => (
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '60vh', width: '100%' }}>
+    <Loader2 size={40} className="spin" color="var(--nexus-primary)" />
+  </div>
+);
+
+function AppContent() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [currentPage, setCurrentPage] = useState<PageRoute>('home');
   const [currentVersion, setCurrentVersion] = useState('v2.4');
@@ -36,6 +49,7 @@ export default function App() {
   // Modal States
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); // Lifted search state
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
   
   // Auth State
@@ -92,6 +106,12 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  // Unified Search Handler
+  const handleSearch = (query: string = '') => {
+    setSearchQuery(query);
+    setIsSearchOpen(true);
+  };
+
   const handleToggleFavorite = (item: FavoriteItem) => {
     setFavorites(prev => {
       const exists = prev.find(f => f.id === item.id);
@@ -129,9 +149,25 @@ export default function App() {
   const renderContent = () => {
     switch (currentPage) {
       case 'home':
-        return <Home onNavigate={handleNavigate} />;
+        return (
+          <>
+            <SEO title="Home" description="The unified governance platform for modern engineering teams." />
+            <Home onNavigate={handleNavigate} onSearch={handleSearch} />
+          </>
+        );
       case 'docs':
-        return <Documentation activeDoc={activeDoc} onDocChange={setActiveDoc} favorites={favorites} onToggleFavorite={handleToggleFavorite} />;
+        return (
+          <>
+            <SEO title="Documentation" description="Comprehensive guides and references for EATGF." />
+            <Documentation 
+              activeDoc={activeDoc} 
+              onDocChange={setActiveDoc} 
+              favorites={favorites} 
+              onToggleFavorite={handleToggleFavorite}
+              onSearch={handleSearch}
+            />
+          </>
+        );
       
       // Explore Our Topics & Main Nav Placeholders
       case 'api':
@@ -161,21 +197,53 @@ export default function App() {
       
       // Activated Pages
       case 'about':
-        return <About />;
+        return (
+          <>
+            <SEO title="About Us" description="Our mission to empower engineering teams worldwide." />
+            <About />
+          </>
+        );
       case 'careers':
-        return <Careers />;
+        return (
+          <>
+            <SEO title="Careers" description="Join our team and build the future of governance." />
+            <Careers />
+          </>
+        );
       case 'contact':
-        return <Contact />;
+        return (
+          <>
+            <SEO title="Contact" description="Get in touch with our support and sales teams." />
+            <Contact />
+          </>
+        );
       case 'legal':
-        return <Legal defaultTab="terms" />;
+        return (
+          <>
+             <SEO title="Legal" description="Terms of Service and Privacy Policy." />
+             <Legal defaultTab="terms" />
+          </>
+        );
       case 'privacy':
-        return <Legal defaultTab="privacy" />;
+        return (
+          <>
+             <SEO title="Privacy Policy" description="How we handle your data." />
+             <Legal defaultTab="privacy" />
+          </>
+        );
       case 'terms':
-        return <Legal defaultTab="terms" />;
+        return (
+          <>
+             <SEO title="Terms of Service" description="The fine print." />
+             <Legal defaultTab="terms" />
+          </>
+        );
       
       // User Pages
       case 'profile':
         return (
+          <>
+            <SEO title="Profile" description="Manage your account settings." />
             <Profile 
                 user={user} 
                 onLogout={handleLogout} 
@@ -183,10 +251,16 @@ export default function App() {
                 favorites={favorites} 
                 onToggleFavorite={handleToggleFavorite}
             />
+          </>
         );
         
       default:
-        return <Home onNavigate={handleNavigate} />;
+        return (
+          <>
+             <SEO title="Home" />
+             <Home onNavigate={handleNavigate} onSearch={handleSearch} />
+          </>
+        );
     }
   };
 
@@ -196,7 +270,7 @@ export default function App() {
         isDark={theme === 'dark'} 
         toggleTheme={toggleTheme} 
         onMenuClick={() => setIsMobileMenuOpen(true)}
-        onSearchClick={() => setIsSearchOpen(true)}
+        onSearchClick={() => handleSearch('')}
         onFeedbackClick={() => setIsFeedbackOpen(true)}
         onNavigate={handleNavigate}
         currentVersion={currentVersion}
@@ -215,8 +289,9 @@ export default function App() {
       
       <SearchModal 
         isOpen={isSearchOpen}
-        onClose={() => setIsSearchOpen(false)}
+        onClose={() => { setIsSearchOpen(false); setSearchQuery(''); }}
         onNavigate={handleNavigate}
+        initialQuery={searchQuery}
       />
 
       <FeedbackModal 
@@ -236,10 +311,20 @@ export default function App() {
       
       {/* Main Content Area */}
       <div style={{ flex: 1, display: 'flex', flexDirection: 'column', width: '100%' }}>
-        {renderContent()}
+        <Suspense fallback={<PageLoader />}>
+          {renderContent()}
+        </Suspense>
       </div>
       
       <Footer onNavigate={handleNavigate} />
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <I18nProvider>
+      <AppContent />
+    </I18nProvider>
   );
 }

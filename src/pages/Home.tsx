@@ -1,12 +1,16 @@
 
 import React from 'react';
 import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database } from 'lucide-react';
+import { useTranslation } from '../i18n/I18nContext';
 
 interface HomeProps {
   onNavigate: (page: string) => void;
+  onSearch?: (query: string) => void;
 }
 
-export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
+export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
+  const { t } = useTranslation();
+
   return (
     <main style={{ width: '100%' }}>
       {/* Hero Section with Docfi Vibes - Full Width */}
@@ -37,11 +41,11 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             marginBottom: '1.5rem',
             color: 'white' 
           }}>
-            How Can We Help You?
+            {t('hero.title')}
           </h1>
           
           <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '800px', margin: '0 auto 3rem' }}>
-             Search here to get answers to your questions about the <br/><strong>Enterprise AI-Aligned Technical Governance Framework</strong>.
+             {t('hero.subtitle')}
           </p>
 
           {/* Central Search Bar */}
@@ -49,7 +53,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
             <input 
               type="text" 
               className="hero-search-input"
-              placeholder="Search the EATGF knowledge base..." 
+              placeholder={t('common.searchKbPlaceholder')} 
+              onChange={(e) => onSearch && onSearch(e.target.value)}
             />
             <button className="hero-search-btn" onClick={() => onNavigate('docs')}>
               <Search size={20} />
@@ -57,7 +62,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
           </div>
           
           <div style={{ marginTop: '1.5rem', fontSize: '0.9rem', opacity: 0.8 }}>
-            Popular: <span onClick={() => onNavigate('docs')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Framework Setup</span>, <span onClick={() => onNavigate('security')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Governance</span>, <span onClick={() => onNavigate('billing')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Compliance</span>
+            {t('common.popular')}: <span onClick={() => onNavigate('docs')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Framework Setup</span>, <span onClick={() => onNavigate('security')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Governance</span>, <span onClick={() => onNavigate('billing')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Compliance</span>
           </div>
 
         </div>
@@ -74,8 +79,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
       <section style={{ padding: '4rem 0 6rem', marginTop: '-4rem', position: 'relative', zIndex: 20, width: '100%', display: 'flex', justifyContent: 'center' }}>
         <div className="container">
            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
-             <span style={{ color: 'var(--nexus-primary)', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', fontSize: '0.8rem' }}>Knowledge Base</span>
-             <h2 style={{ fontSize: '2rem', marginTop: '0.5rem' }}>Explore Our Topics</h2>
+             <span style={{ color: 'var(--nexus-primary)', fontWeight: 700, letterSpacing: '1px', textTransform: 'uppercase', fontSize: '0.8rem' }}>{t('home.knowledgeBase')}</span>
+             <h2 style={{ fontSize: '2rem', marginTop: '0.5rem' }}>{t('home.exploreTopics')}</h2>
            </div>
            
            <div style={{ 
@@ -86,44 +91,50 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
              <DocCard 
                icon={<Book size={28} />} 
                color="blue"
-               title="Documentation" 
-               desc="Core guides for the EATGF Platform."
+               title={t('nav.docs')} 
+               desc={t('cards.docsDesc')}
                onClick={() => onNavigate('docs')}
+               btnText={t('common.viewDetails')}
              />
              <DocCard 
                icon={<Code size={28} />} 
                color="purple"
-               title="API Reference" 
-               desc="Complete REST API documentation."
+               title={t('nav.api')} 
+               desc={t('cards.apiDesc')}
                onClick={() => onNavigate('api')}
+               btnText={t('common.viewDetails')}
              />
              <DocCard 
                icon={<Shield size={28} />} 
                color="pink"
                title="Governance" 
-               desc="SOC2, GDPR, and AI compliance info."
+               desc={t('cards.govDesc')}
                onClick={() => onNavigate('security')}
+               btnText={t('common.viewDetails')}
              />
              <DocCard 
                icon={<Layers size={28} />} 
                color="teal"
                title="Architecture" 
-               desc="Deep dive into system design."
+               desc={t('cards.archDesc')}
                onClick={() => onNavigate('architecture')}
+               btnText={t('common.viewDetails')}
              />
              <DocCard 
                icon={<Database size={28} />} 
                color="orange"
                title="Data Model" 
-               desc="Understanding schemas and storage."
+               desc={t('cards.dataDesc')}
                onClick={() => onNavigate('datamodel')}
+               btnText={t('common.viewDetails')}
              />
              <DocCard 
                icon={<Zap size={28} />} 
                color="blue"
                title="Integrations" 
-               desc="Connect with Slack, Jira, and Github."
+               desc={t('cards.intDesc')}
                onClick={() => onNavigate('integrations')}
+               btnText={t('common.viewDetails')}
              />
            </div>
         </div>
@@ -134,10 +145,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
         <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
           <div>
              <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', lineHeight: 1.2 }}>
-               Great Customer <br /> <span style={{ color: 'var(--nexus-primary)' }}>Relationships</span> Start Here
+               {t('home.customerRel')}
              </h2>
              <p style={{ color: 'var(--nexus-text-secondary)', fontSize: '1.1rem', marginBottom: '2rem' }}>
-               We provide 24/7 dedicated support for all enterprise customers. Join the community or chat with our AI assistant.
+               {t('home.customerRelDesc')}
              </p>
              <button onClick={() => onNavigate('community')} style={{
                padding: '1rem 2rem',
@@ -150,7 +161,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
                cursor: 'pointer',
                boxShadow: '0 10px 20px rgba(67, 97, 238, 0.3)'
              }}>
-               Join Community Forum
+               {t('home.joinCommunity')}
              </button>
           </div>
           
@@ -167,7 +178,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
              <div style={{ position: 'absolute', top: -20, right: -20, background: 'white', padding: '1rem', borderRadius: '16px', boxShadow: 'var(--shadow-lg)' }}>
                 <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
                     <div style={{ width: 10, height: 10, borderRadius: '50%', background: '#10B981' }}></div>
-                    <span style={{ fontWeight: 600 }}>System Operational</span>
+                    <span style={{ fontWeight: 600 }}>{t('home.systemOp')}</span>
                 </div>
              </div>
              <Layers size={100} color="var(--nexus-primary-light)" opacity={0.5} />
@@ -178,7 +189,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate }) => {
   );
 };
 
-const DocCard: React.FC<{ icon: React.ReactNode, title: string, desc: string, color: string, onClick: () => void }> = ({ icon, title, desc, color, onClick }) => {
+const DocCard: React.FC<{ icon: React.ReactNode, title: string, desc: string, color: string, onClick: () => void, btnText: string }> = ({ icon, title, desc, color, onClick, btnText }) => {
   return (
     <div 
       className="card-modern"
@@ -191,7 +202,7 @@ const DocCard: React.FC<{ icon: React.ReactNode, title: string, desc: string, co
       <h3 style={{ fontSize: '1.25rem', marginBottom: '0.75rem' }}>{title}</h3>
       <p style={{ color: 'var(--nexus-text-secondary)', flex: 1, marginBottom: '1.5rem', lineHeight: 1.6 }}>{desc}</p>
       <div style={{ color: 'var(--nexus-primary)', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.5rem', marginTop: 'auto' }}>
-        View Details <ArrowRight size={16} />
+        {btnText} <ArrowRight size={16} />
       </div>
     </div>
   )

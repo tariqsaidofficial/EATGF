@@ -1,43 +1,82 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { Search, X, ChevronRight, FileText, Hash } from 'lucide-react';
+import { SIDEBAR_ITEMS } from './Sidebar';
 
 interface SearchModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string, params?: any) => void;
+  initialQuery?: string;
 }
 
-const MOCK_RESULTS = [
-  { id: '1', title: 'Introduction to Nexus', category: 'Getting Started', path: 'docs' },
-  { id: '2', title: 'Installation Guide', category: 'Getting Started', path: 'docs' },
-  { id: '3', title: 'Nexus CLI Reference', category: 'Tooling', path: 'docs' },
-  { id: '4', title: 'Platform Architecture', category: 'Core Concepts', path: 'docs' },
-  { id: '5', title: 'Authentication & SSO', category: 'Security', path: 'docs' },
-  { id: '6', title: 'API Rate Limiting', category: 'API Reference', path: 'docs' },
-];
+// Dynamically generate search index from sidebar items
+const SEARCH_INDEX = SIDEBAR_ITEMS.flatMap(section => 
+  section.items.flatMap(item => {
+    const mainItem = { 
+      id: item.id, 
+      title: item.label, 
+      category: section.category, 
+      path: 'docs', 
+      docId: item.id 
+    };
+    
+    if (item.items && item.items.length > 0) {
+       return [
+         mainItem,
+         ...item.items.map(sub => ({ 
+           id: sub.id, 
+           title: sub.label, 
+           category: `${section.category} > ${item.label}`, 
+           path: 'docs', 
+           docId: sub.id 
+         }))
+       ];
+    }
+    return [mainItem];
+  })
+);
 
-export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onNavigate }) => {
-  const [query, setQuery] = useState('');
+export const SearchModal: React.FC<SearchModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  onNavigate,
+  initialQuery = '' 
+}) => {
+  const [query, setQuery] = useState(initialQuery);
   const inputRef = useRef<HTMLInputElement>(null);
 
+  // Sync internal state with prop when modal opens or prop changes
   useEffect(() => {
     if (isOpen) {
-        setTimeout(() => inputRef.current?.focus(), 50);
-    } else {
-        setQuery('');
+        setQuery(initialQuery);
+        // Slightly longer delay to ensure focus after animation/render
+        setTimeout(() => {
+          if (inputRef.current) {
+            inputRef.current.focus();
+            // Move cursor to end of text
+            const len = inputRef.current.value.length;
+            inputRef.current.setSelectionRange(len, len);
+          }
+        }, 50);
     }
-    
+  }, [isOpen, initialQuery]);
+
+  useEffect(() => {
     // Handle Esc key
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     window.addEventListener('keydown', handleEsc);
     return () => window.removeEventListener('keydown', handleEsc);
-  }, [isOpen, onClose]);
+  }, [onClose]);
 
   if (!isOpen) return null;
 
-  const filtered = MOCK_RESULTS.filter(r => r.title.toLowerCase().includes(query.toLowerCase()));
+  const filtered = SEARCH_INDEX.filter(r => 
+    r.title.toLowerCase().includes(query.toLowerCase()) || 
+    r.category.toLowerCase().includes(query.toLowerCase())
+  );
 
   return (
     <div style={{
@@ -87,7 +126,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onNav
                 </div>
               )}
               {filtered.map((item) => (
-                <button key={item.id} onClick={() => { onNavigate(item.path); onClose(); }} style={{
+                <button key={item.id} onClick={() => { onNavigate(item.path, item.docId); onClose(); }} style={{
                   display: 'flex', alignItems: 'center', width: '100%', padding: '0.75rem 1rem',
                   border: 'none', background: 'transparent', borderRadius: '8px', cursor: 'pointer',
                   textAlign: 'left', gap: '1rem', transition: 'background 0.1s'
@@ -99,7 +138,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onNav
                     padding: '8px', borderRadius: '6px', background: 'rgba(79, 70, 229, 0.1)', 
                     color: 'var(--nexus-primary)' 
                   }}>
-                    <Hash size={18} />
+                    <FileText size={18} />
                   </div>
                   <div style={{ flex: 1 }}>
                     <div style={{ color: 'var(--nexus-text-primary)', fontWeight: 500, fontSize: '1rem' }}>{item.title}</div>
@@ -117,7 +156,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose, onNav
           fontSize: '0.8rem', color: 'var(--nexus-text-secondary)', background: 'var(--nexus-bg-root)',
           display: 'flex', justifyContent: 'space-between'
         }}>
-          <span>Search powered by Nexus Index</span>
+          <span>Search powered by EATGF Index</span>
           <span><span style={{ fontWeight: 700 }}>↑↓</span> to navigate</span>
         </div>
       </div>

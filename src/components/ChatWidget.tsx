@@ -279,7 +279,7 @@ export const ChatWidget: React.FC = () => {
                 gap: '0.5rem',
                 color: 'var(--nexus-text-secondary)'
               }}>
-                <Loader2 size={16} className="spin" />
+                <Loader2 size={16} className="spin" color="var(--nexus-primary)" />
                 <span style={{ fontSize: '0.85rem' }}>Processing...</span>
               </div>
             </div>

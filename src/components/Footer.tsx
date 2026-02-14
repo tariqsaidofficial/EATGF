@@ -1,11 +1,14 @@
 
 import React from 'react';
+import { useTranslation } from '../i18n/I18nContext';
 
 interface FooterProps {
   onNavigate: (page: string) => void;
 }
 
 export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
+  const { t } = useTranslation();
+
   const handleLinkClick = (page: string, e: React.MouseEvent) => {
     e.preventDefault();
     onNavigate(page);
@@ -36,10 +39,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div>
             <h4 style={{ color: 'white', marginBottom: '1rem' }}>Framework</h4>
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li><a href="#" onClick={(e) => handleLinkClick('features', e)} style={{ color: 'inherit' }}>Features</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('integrations', e)} style={{ color: 'inherit' }}>Integrations</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('enterprise', e)} style={{ color: 'inherit' }}>Enterprise</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('security', e)} style={{ color: 'inherit' }}>Security</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('features', e)} style={{ color: 'inherit' }}>{t('nav.features')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('integrations', e)} style={{ color: 'inherit' }}>{t('nav.integrations')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('enterprise', e)} style={{ color: 'inherit' }}>{t('nav.enterprise')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('security', e)} style={{ color: 'inherit' }}>{t('nav.security')}</a></li>
             </ul>
           </div>
 
@@ -47,10 +50,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div>
             <h4 style={{ color: 'white', marginBottom: '1rem' }}>Resources</h4>
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li><a href="#" onClick={(e) => handleLinkClick('docs', e)} style={{ color: 'inherit' }}>Documentation</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('api', e)} style={{ color: 'inherit' }}>API Reference</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('community', e)} style={{ color: 'inherit' }}>Community</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('help', e)} style={{ color: 'inherit' }}>Help Center</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('docs', e)} style={{ color: 'inherit' }}>{t('nav.docs')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('api', e)} style={{ color: 'inherit' }}>{t('nav.api')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('community', e)} style={{ color: 'inherit' }}>{t('nav.community')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('help', e)} style={{ color: 'inherit' }}>{t('nav.help')}</a></li>
             </ul>
           </div>
 
@@ -58,10 +61,10 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           <div>
             <h4 style={{ color: 'white', marginBottom: '1rem' }}>Organization</h4>
             <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li><a href="#" onClick={(e) => handleLinkClick('about', e)} style={{ color: 'inherit' }}>About</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('careers', e)} style={{ color: 'inherit' }}>Careers</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('legal', e)} style={{ color: 'inherit' }}>Legal</a></li>
-              <li><a href="#" onClick={(e) => handleLinkClick('contact', e)} style={{ color: 'inherit' }}>Contact</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('about', e)} style={{ color: 'inherit' }}>{t('nav.about')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('careers', e)} style={{ color: 'inherit' }}>{t('nav.careers')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('legal', e)} style={{ color: 'inherit' }}>{t('nav.legal')}</a></li>
+              <li><a href="#" onClick={(e) => handleLinkClick('contact', e)} style={{ color: 'inherit' }}>{t('nav.contact')}</a></li>
             </ul>
           </div>
 
@@ -79,9 +82,9 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
         }}>
           <div>© {new Date().getFullYear()} EATGF Inc. All rights reserved.</div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
-             <a href="#" onClick={(e) => handleLinkClick('privacy', e)} style={{ color: 'inherit' }}>Privacy Policy</a>
-             <a href="#" onClick={(e) => handleLinkClick('terms', e)} style={{ color: 'inherit' }}>Terms of Service</a>
-             <a href="#" onClick={(e) => handleLinkClick('privacy', e)} style={{ color: 'inherit' }}>Cookie Settings</a>
+             <a href="#" onClick={(e) => handleLinkClick('privacy', e)} style={{ color: 'inherit' }}>{t('nav.privacy')}</a>
+             <a href="#" onClick={(e) => handleLinkClick('terms', e)} style={{ color: 'inherit' }}>{t('nav.terms')}</a>
+             <a href="#" onClick={(e) => handleLinkClick('privacy', e)} style={{ color: 'inherit' }}>{t('nav.cookies')}</a>
           </div>
         </div>
       </div>
