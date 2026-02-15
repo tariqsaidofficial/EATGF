@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { X, MessageSquare, Send } from 'lucide-react';
 
@@ -62,7 +63,7 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose })
                 </div>
               </div>
               <h4 style={{ marginBottom: '0.5rem' }}>Thank you!</h4>
-              <p style={{ color: 'var(--nexus-text-secondary)' }}>Your feedback helps us improve Nexus.</p>
+              <p style={{ color: 'var(--nexus-text-secondary)' }}>Your feedback helps us improve EATGF.</p>
             </div>
           ) : (
             <form onSubmit={handleSubmit}>

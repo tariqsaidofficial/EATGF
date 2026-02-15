@@ -293,7 +293,7 @@ export const Profile: React.FC<ProfileProps> = ({
                           <div>
                             <h4 style={{ fontSize: '1rem', marginBottom: '0.25rem' }}>{fav.title}</h4>
                             <p style={{ fontSize: '0.85rem', color: 'var(--nexus-text-secondary)' }}>
-                               {fav.description || 'Nexus Documentation'}
+                               {fav.description || 'EATGF Documentation'}
                             </p>
                           </div>
                         </div>

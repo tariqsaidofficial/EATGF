@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database, Terminal, Cpu, Layout, Server, Box, Cloud, GitBranch, Lock, Activity, MessageSquare, CheckSquare, Rocket, Users, Building2, CheckCircle } from 'lucide-react';
+import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database, Terminal, Cpu, Layout, Server, Box, Cloud, GitBranch, Lock, Activity, MessageSquare, CheckSquare, Rocket, Users, Building2, CheckCircle, CloudLightning } from 'lucide-react';
 import { useTranslation } from '../i18n/I18nContext';
 
 interface HomeProps {
@@ -297,6 +297,152 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
         </div>
       </section>
 
+      {/* NEW SECTION: SaaS & PaaS Architectural Patterns */}
+      <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-root)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+             <span style={{ 
+                 color: 'var(--nexus-accent)', 
+                 fontWeight: 700, 
+                 letterSpacing: '1.5px', 
+                 textTransform: 'uppercase', 
+                 fontSize: '0.85rem',
+                 background: 'rgba(114, 9, 183, 0.1)',
+                 padding: '0.5rem 1rem',
+                 borderRadius: '20px'
+             }}>
+                 Architectural Patterns
+             </span>
+             <h2 style={{ fontSize: '2.5rem', marginTop: '1.5rem', fontWeight: 800 }}>SaaS & PaaS Governance Models</h2>
+             <p style={{ color: 'var(--nexus-text-secondary)', maxWidth: '700px', margin: '1rem auto 0', fontSize: '1.1rem' }}>
+                EATGF provides comprehensive reference architectures and compliance rulebooks for both multi-tenant SaaS and dedicated PaaS deployment models.
+             </p>
+          </div>
+
+          <div className="grid-2-col" style={{ alignItems: 'stretch' }}>
+              {/* SaaS Governance Visual Card */}
+              <div className="card-modern" style={{ 
+                  background: 'linear-gradient(135deg, #ffffff 0%, #f0f9ff 100%)', 
+                  border: '1px solid #bae6fd',
+                  padding: '0',
+                  overflow: 'hidden'
+              }}>
+                  <div style={{ padding: '2.5rem 2.5rem 0' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                          <div style={{ padding: '0.75rem', background: '#e0f2fe', borderRadius: '12px', color: '#0284c7' }}>
+                              <CloudLightning size={24} />
+                          </div>
+                          <h3 style={{ margin: 0, fontSize: '1.5rem', color: '#0f172a' }}>SaaS Governance</h3>
+                      </div>
+                      <p style={{ color: '#475569', marginBottom: '2rem', lineHeight: 1.6 }}>
+                          Guidelines for multi-tenancy, per-tenant metering, and API-first distribution.
+                      </p>
+                  </div>
+                  
+                  {/* SaaS Visual Construction */}
+                  <div style={{ 
+                      height: '240px', 
+                      background: 'linear-gradient(to top, #e0f2fe 0%, transparent 100%)',
+                      position: 'relative',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                  }}>
+                       {/* Central Node */}
+                       <div style={{ 
+                           width: 80, height: 80, background: 'white', borderRadius: '50%', 
+                           boxShadow: '0 10px 25px rgba(2, 132, 199, 0.2)',
+                           display: 'flex', alignItems: 'center', justifyContent: 'center',
+                           zIndex: 2, position: 'relative'
+                       }}>
+                          <Box size={32} color="#0284c7" />
+                       </div>
+                       
+                       {/* Satellites */}
+                       {[0, 90, 180, 270].map((deg, i) => (
+                          <div key={i} style={{
+                              position: 'absolute',
+                              width: 40, height: 40, background: 'white', borderRadius: '50%',
+                              boxShadow: '0 4px 10px rgba(2, 132, 199, 0.1)',
+                              display: 'flex', alignItems: 'center', justifyContent: 'center',
+                              transform: `rotate(${deg}deg) translate(80px) rotate(-${deg}deg)`
+                          }}>
+                              <Users size={16} color="#38bdf8" />
+                          </div>
+                       ))}
+                       
+                       {/* Connection Lines (CSS Borders) */}
+                       <div style={{
+                           position: 'absolute', width: '160px', height: '160px', 
+                           border: '2px dashed #bae6fd', borderRadius: '50%',
+                           animation: 'spin 20s linear infinite'
+                       }} />
+                  </div>
+              </div>
+
+              {/* PaaS Governance Visual Card */}
+              <div className="card-modern" style={{ 
+                  background: 'linear-gradient(135deg, #f8fafc 0%, #1e293b 100%)', 
+                  border: '1px solid #334155',
+                  padding: '0',
+                  overflow: 'hidden'
+              }}>
+                  <div style={{ padding: '2.5rem 2.5rem 0' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem' }}>
+                          <div style={{ padding: '0.75rem', background: '#334155', borderRadius: '12px', color: '#a78bfa' }}>
+                              <Server size={24} />
+                          </div>
+                          <h3 style={{ margin: 0, fontSize: '1.5rem', color: 'white' }}>PaaS Governance</h3>
+                      </div>
+                      <p style={{ color: '#cbd5e1', marginBottom: '2rem', lineHeight: 1.6 }}>
+                          Standards for dedicated infrastructure, container orchestration, and air-gapped deployments.
+                      </p>
+                  </div>
+
+                  {/* PaaS Visual Construction */}
+                  <div style={{ 
+                      height: '240px', 
+                      background: 'linear-gradient(to top, #0f172a 0%, transparent 100%)',
+                      position: 'relative',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'flex-end',
+                      paddingBottom: '2rem'
+                  }}>
+                       <div style={{
+                           display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem'
+                       }}>
+                           {/* Layer 3: App */}
+                           <div style={{ 
+                               width: '100px', height: '40px', background: '#a78bfa', borderRadius: '6px',
+                               boxShadow: '0 4px 12px rgba(167, 139, 250, 0.3)', zIndex: 3,
+                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 600, color: 'white'
+                           }}>App</div>
+                           
+                           {/* Layer 2: Container */}
+                           <div style={{ 
+                               width: '140px', height: '40px', background: '#6366f1', borderRadius: '6px',
+                               boxShadow: '0 4px 12px rgba(99, 102, 241, 0.3)', zIndex: 2,
+                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 600, color: 'white'
+                           }}>K8s / Docker</div>
+                           
+                           {/* Layer 1: Infra */}
+                           <div style={{ 
+                               width: '180px', height: '40px', background: '#334155', borderRadius: '6px',
+                               boxShadow: '0 4px 12px rgba(0,0,0,0.3)', zIndex: 1,
+                               display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem', fontWeight: 600, color: '#94a3b8'
+                           }}>Infrastructure</div>
+                       </div>
+                       
+                       {/* Floating Particles */}
+                       <div style={{ position: 'absolute', top: '20%', right: '20%', width: 6, height: 6, background: '#a78bfa', borderRadius: '50%' }} />
+                       <div style={{ position: 'absolute', top: '30%', left: '20%', width: 4, height: 4, background: '#6366f1', borderRadius: '50%' }} />
+                  </div>
+              </div>
+          </div>
+        </div>
+      </section>
+
       {/* Governance & Guidelines Section (Replacing SaaS/PaaS) */}
       <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-surface)' }}>
         <div className="container">
@@ -565,6 +711,10 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
             0% { transform: translateY(0px) rotate(0deg); } 
             50% { transform: translateY(-20px) rotate(5deg); } 
             100% { transform: translateY(0px) rotate(0deg); } 
+        }
+        @keyframes spin { 
+            from { transform: rotate(0deg); } 
+            to { transform: rotate(360deg); } 
         }
       `}</style>
     </main>

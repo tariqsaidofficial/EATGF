@@ -247,7 +247,7 @@ module.exports = {
             </p>
 
             <Tip title="Pro Tip">
-              Use the `Nexus-CDN-Cache-Control` header to granularly control edge caching behavior per API route.
+              Use the `EATGF-CDN-Cache-Control` header to granularly control edge caching behavior per API route.
             </Tip>
             
             <div style={{ display: 'grid', gap: '1.5rem', marginTop: '1.5rem' }}>
@@ -384,14 +384,14 @@ module.exports = {
         return (
           <>
             <p style={{ fontSize: '1.125rem', color: 'var(--nexus-text-secondary)', marginBottom: '2rem' }}>
-              The <strong>Technical Governance Framework (EATGF)</strong> is a unified knowledge and cloud orchestration platform designed for enterprises, startups, and developers. This guide covers the architectural principles and basic setup.
+              The <strong>Enterprise AI-Aligned Technical Governance Framework (EATGF)</strong> is a unified knowledge and cloud orchestration platform designed for enterprises, startups, and developers. This guide covers the architectural principles and basic setup.
             </p>
 
             <Note title="Important Note">
               This documentation applies to EATGF v2.4+. If you are on a legacy version (v1.x), please switch the version dropdown in the navbar.
             </Note>
 
-            <h2 id="why-nexus" style={{ fontSize: '1.75rem', marginTop: '2.5rem', marginBottom: '1rem', borderBottom: '1px solid var(--nexus-border)', paddingBottom: '0.5rem' }}>
+            <h2 id="why-eatgf" style={{ fontSize: '1.75rem', marginTop: '2.5rem', marginBottom: '1rem', borderBottom: '1px solid var(--nexus-border)', paddingBottom: '0.5rem' }}>
               Overview
             </h2>
             <p style={{ marginBottom: '1.5rem' }}>
