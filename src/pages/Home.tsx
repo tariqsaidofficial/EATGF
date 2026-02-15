@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database, Terminal, Cpu, Layout, Server, Box, Cloud, GitBranch } from 'lucide-react';
+import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database, Terminal, Cpu, Layout, Server, Box, Cloud, GitBranch, Lock, Activity, MessageSquare, CheckSquare } from 'lucide-react';
 import { useTranslation } from '../i18n/I18nContext';
 
 interface HomeProps {
@@ -297,8 +297,71 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
         </div>
       </section>
 
-      {/* Trust/Support Section */}
+      {/* Integrations Ecosystem Section */}
       <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-surface)' }}>
+        <div className="container">
+            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+                <span style={{ 
+                    color: '#F59E0B', 
+                    fontWeight: 700, 
+                    letterSpacing: '1.5px', 
+                    textTransform: 'uppercase', 
+                    fontSize: '0.85rem',
+                    background: 'rgba(245, 158, 11, 0.1)',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '20px'
+                }}>
+                    Connected Ecosystem
+                </span>
+                <h2 style={{ fontSize: '2.5rem', marginTop: '1.5rem', fontWeight: 800 }}>Seamless Integrations</h2>
+                <p style={{ color: 'var(--nexus-text-secondary)', maxWidth: '700px', margin: '1rem auto 0', fontSize: '1.1rem' }}>
+                Connect EATGF with your existing toolchain. We support over 50+ native integrations across the entire software lifecycle.
+                </p>
+            </div>
+
+            <div className="grid-3-col" style={{ gap: '2rem' }}>
+                <IntegrationCard 
+                    title="Identity & Access" 
+                    icon={<Lock size={24} />} 
+                    color="blue"
+                    tools={['Okta', 'Auth0', 'Azure AD', 'Google Workspace', 'OneLogin', 'Keycloak']}
+                />
+                <IntegrationCard 
+                    title="Observability" 
+                    icon={<Activity size={24} />} 
+                    color="purple"
+                    tools={['Datadog', 'New Relic', 'Prometheus', 'Grafana', 'Sentry', 'Splunk']}
+                />
+                <IntegrationCard 
+                    title="Communication" 
+                    icon={<MessageSquare size={24} />} 
+                    color="green"
+                    tools={['Slack', 'Microsoft Teams', 'Discord', 'PagerDuty', 'Mattermost', 'Email']}
+                />
+                <IntegrationCard 
+                    title="Project Management" 
+                    icon={<CheckSquare size={24} />} 
+                    color="orange"
+                    tools={['Jira', 'Linear', 'Asana', 'Trello', 'Monday.com', 'Notion']}
+                />
+                <IntegrationCard 
+                    title="CI/CD Pipelines" 
+                    icon={<GitBranch size={24} />} 
+                    color="pink"
+                    tools={['GitHub Actions', 'GitLab CI', 'Jenkins', 'CircleCI', 'ArgoCD', 'Travis CI']}
+                />
+                <IntegrationCard 
+                    title="Cloud Providers" 
+                    icon={<Cloud size={24} />} 
+                    color="teal"
+                    tools={['AWS', 'Google Cloud', 'Azure', 'DigitalOcean', 'Vercel', 'Netlify']}
+                />
+            </div>
+        </div>
+      </section>
+
+      {/* Trust/Support Section */}
+      <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-root)', borderTop: '1px solid var(--nexus-border)' }}>
         <div className="container grid-2-col" style={{ gap: '5rem', alignItems: 'center' }}>
           <div>
              <h2 style={{ fontSize: 'clamp(2.25rem, 4vw, 3rem)', marginBottom: '1.5rem', lineHeight: 1.2 }}>
@@ -336,7 +399,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
                     cursor: 'pointer',
                     transition: 'background 0.2s'
                 }}
-                onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-root)'}
+                onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
                 onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
                 >
                     Contact Sales
@@ -359,7 +422,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
           {/* Abstract Illustration */}
           <div style={{ 
             height: '450px', 
-            background: 'linear-gradient(135deg, var(--nexus-bg-root) 0%, var(--nexus-bg-surface) 100%)', 
+            background: 'linear-gradient(135deg, var(--nexus-bg-surface) 0%, var(--nexus-bg-root) 100%)', 
             borderRadius: '30px', 
             display: 'flex', 
             alignItems: 'center', 
@@ -445,6 +508,43 @@ const FrameworkCard = ({ title, icon, color, items }: { title: string, icon: any
     </div>
   </div>
 );
+
+// Helper Component for Integration Cards
+const IntegrationCard = ({ title, icon, color, tools }: { title: string, icon: any, color: string, tools: string[] }) => {
+    let accentColor = 'var(--nexus-primary)';
+    let bgLight = 'rgba(67, 97, 238, 0.1)';
+    
+    if (color === 'purple') { accentColor = 'var(--nexus-accent)'; bgLight = 'rgba(114, 9, 183, 0.1)'; }
+    if (color === 'green') { accentColor = '#10B981'; bgLight = 'rgba(16, 185, 129, 0.1)'; }
+    if (color === 'orange') { accentColor = '#F59E0B'; bgLight = 'rgba(245, 158, 11, 0.1)'; }
+    if (color === 'pink') { accentColor = '#EF4444'; bgLight = 'rgba(239, 68, 68, 0.1)'; }
+    if (color === 'teal') { accentColor = '#06b6d4'; bgLight = 'rgba(6, 182, 212, 0.1)'; }
+
+    return (
+        <div className="card-modern" style={{ padding: '2rem', borderTop: `4px solid ${accentColor}` }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+                <div style={{ 
+                    width: 48, height: 48, borderRadius: '12px', background: bgLight, 
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', color: accentColor 
+                }}>
+                    {icon}
+                </div>
+                <h3 style={{ fontSize: '1.15rem', margin: 0 }}>{title}</h3>
+            </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+                {tools.map((tool, i) => (
+                    <span key={i} style={{ 
+                        fontSize: '0.85rem', padding: '0.25rem 0.75rem', 
+                        background: 'var(--nexus-bg-root)', borderRadius: '6px', 
+                        border: '1px solid var(--nexus-border)', color: 'var(--nexus-text-secondary)' 
+                    }}>
+                        {tool}
+                    </span>
+                ))}
+            </div>
+        </div>
+    );
+};
 
 const DocCard: React.FC<{ icon: React.ReactNode, title: string, desc: string, color: string, onClick: () => void, btnText: string }> = ({ icon, title, desc, color, onClick, btnText }) => {
   return (
