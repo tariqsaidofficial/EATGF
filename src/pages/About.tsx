@@ -1,6 +1,8 @@
 
 import React from 'react';
-import { Target, Heart, Globe, Users } from 'lucide-react';
+import { Target, Heart, Globe, Users, Info } from 'lucide-react';
+import { Note, Tip } from '../components/Callout';
+import { Tooltip } from '../components/Tooltip';
 
 export const About: React.FC = () => {
   return (
@@ -25,28 +27,52 @@ export const About: React.FC = () => {
       {/* Values Grid */}
       <section style={{ padding: '4rem 0' }}>
         <div className="container">
+          <div style={{ marginBottom: '2rem' }}>
+             <Note title="Culture Note">
+                We are a distributed-first company. We value asynchronous communication and deep work.
+             </Note>
+          </div>
+
           <div className="grid-3-col">
             <div className="card-modern">
-              <div className="icon-wrapper bg-blue-light"><Target size={32} /></div>
+              <div className="icon-wrapper bg-blue-light">
+                <Tooltip content="We put customers first!" position="top">
+                  <Target size={32} />
+                </Tooltip>
+              </div>
               <h3>Customer Obsession</h3>
               <p style={{ color: 'var(--nexus-text-secondary)', marginTop: '0.5rem' }}>
                 We start with the customer and work backwards. Every line of code serves a user need.
               </p>
             </div>
             <div className="card-modern">
-              <div className="icon-wrapper bg-pink-light"><Heart size={32} /></div>
+              <div className="icon-wrapper bg-pink-light">
+                 <Tooltip content="Open by default." position="top">
+                    <Heart size={32} />
+                 </Tooltip>
+              </div>
               <h3>Radical Transparency</h3>
               <p style={{ color: 'var(--nexus-text-secondary)', marginTop: '0.5rem' }}>
                 We believe in open source, open roadmaps, and honest communication with our community.
               </p>
             </div>
             <div className="card-modern">
-              <div className="icon-wrapper bg-teal-light"><Globe size={32} /></div>
+              <div className="icon-wrapper bg-teal-light">
+                 <Tooltip content="35+ Countries" position="top">
+                    <Globe size={32} />
+                 </Tooltip>
+              </div>
               <h3>Global Impact</h3>
               <p style={{ color: 'var(--nexus-text-secondary)', marginTop: '0.5rem' }}>
                 Our infrastructure powers critical systems in over 35 countries around the world.
               </p>
             </div>
+          </div>
+          
+          <div style={{ marginTop: '3rem' }}>
+             <Tip title="Join the Movement">
+                We are actively hiring for engineering and design roles. Check out our Careers page to apply!
+             </Tip>
           </div>
         </div>
       </section>

@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Sidebar, SIDEBAR_ITEMS, SidebarItemDef } from '../components/Sidebar';
-import { ChevronRight, Info, Check, Copy, Sparkles, Loader2, Star, Search, Server, Globe, Puzzle, Zap, Activity, Shield, AlertTriangle, Lightbulb, Flame, FileText } from 'lucide-react';
+import { ChevronRight, Check, Copy, Sparkles, Loader2, Star, Search, Server, Globe, Puzzle, Zap, Activity, Shield } from 'lucide-react';
 import { summarizeContent } from '../services/GeminiService';
 import { FavoriteItem } from './Profile';
 import { useTranslation } from '../i18n/I18nContext';
+import { Callout, Note, Tip, Info, Danger } from '../components/Callout';
 
 interface DocumentationProps {
   activeDoc: string;
@@ -96,42 +97,6 @@ const CodeBlock = ({ code, language }: { code: string, language: string }) => {
       </div>
       <div style={{ padding: '1.5rem', overflowX: 'auto' }}>
         <pre style={{ margin: 0, lineHeight: 1.6 }}><code>{code}</code></pre>
-      </div>
-    </div>
-  );
-};
-
-interface CalloutProps {
-  type: 'info' | 'tip' | 'warning' | 'danger' | 'note';
-  title?: string;
-  children: React.ReactNode;
-}
-
-const Callout: React.FC<CalloutProps> = ({ type, title, children }) => {
-  const config = {
-    info: { icon: Info, color: 'var(--nexus-info)', bg: 'rgba(59, 130, 246, 0.08)', border: 'rgba(59, 130, 246, 0.2)' },
-    tip: { icon: Lightbulb, color: 'var(--nexus-success)', bg: 'rgba(16, 185, 129, 0.08)', border: 'rgba(16, 185, 129, 0.2)' },
-    warning: { icon: AlertTriangle, color: 'var(--nexus-warning)', bg: 'rgba(245, 158, 11, 0.08)', border: 'rgba(245, 158, 11, 0.2)' },
-    danger: { icon: Flame, color: 'var(--nexus-danger)', bg: 'rgba(239, 68, 68, 0.08)', border: 'rgba(239, 68, 68, 0.2)' },
-    note: { icon: FileText, color: 'var(--nexus-primary)', bg: 'rgba(67, 97, 238, 0.08)', border: 'rgba(67, 97, 238, 0.2)' },
-  }[type];
-
-  const Icon = config.icon;
-
-  return (
-    <div style={{
-      padding: '1rem 1.25rem',
-      backgroundColor: config.bg,
-      border: `1px solid ${config.border}`,
-      borderRadius: '8px',
-      marginBottom: '1.5rem',
-    }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.5rem', color: config.color, fontWeight: 600 }}>
-        <Icon size={18} />
-        {title && <span>{title}</span>}
-      </div>
-      <div style={{ fontSize: '0.95rem', lineHeight: 1.6, color: 'var(--nexus-text-primary)' }}>
-        {children}
       </div>
     </div>
   );
@@ -279,9 +244,9 @@ module.exports = {
               To achieve sub-100ms latency, we recommend the following caching strategies.
             </p>
 
-            <Callout type="tip" title="Pro Tip">
+            <Tip title="Pro Tip">
               Use the `Nexus-CDN-Cache-Control` header to granularly control edge caching behavior per API route.
-            </Callout>
+            </Tip>
             
             <div style={{ display: 'grid', gap: '1.5rem', marginTop: '1.5rem' }}>
                <div style={{ padding: '1.5rem', background: 'var(--nexus-bg-surface)', border: '1px solid var(--nexus-border)', borderRadius: '12px' }}>
@@ -347,9 +312,9 @@ module.exports = {
 }`} 
             />
             
-            <Callout type="info" title="RTL Support">
+            <Info title="RTL Support">
               Right-to-Left (RTL) support for languages like Arabic and Hebrew is automatically enabled when the locale is detected.
-            </Callout>
+            </Info>
           </>
         );
 
@@ -360,9 +325,9 @@ module.exports = {
               Extend the functionality of your governance platform with certified enterprise plugins.
             </p>
             
-            <Callout type="danger" title="Deprecation Warning">
+            <Danger title="Deprecation Warning">
                The legacy plugin API (v1) will be sunset in Q4 2024. Please migrate to the new `PluginProvider` interface.
-            </Callout>
+            </Danger>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '1.5rem', marginTop: '2rem' }}>
               {[
@@ -420,9 +385,9 @@ module.exports = {
               The <strong>Enterprise AI-Aligned Technical Governance Framework (EATGF)</strong> is a unified knowledge and cloud orchestration platform designed for high-scale enterprise environments. This guide covers the architectural principles and basic setup.
             </p>
 
-            <Callout type="note" title="Enterprise Note">
+            <Note title="Enterprise Note">
               This documentation applies to EATGF v2.4+. If you are on a legacy version (v1.x), please switch the version dropdown in the navbar.
-            </Callout>
+            </Note>
 
             <h2 id="why-nexus" style={{ fontSize: '1.75rem', marginTop: '2.5rem', marginBottom: '1rem', borderBottom: '1px solid var(--nexus-border)', paddingBottom: '0.5rem' }}>
               Overview

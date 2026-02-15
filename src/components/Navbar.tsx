@@ -3,6 +3,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Search, Moon, Sun, Menu, Github, ChevronDown, MessageSquare, LogOut, User as UserIcon, Settings, Globe } from 'lucide-react';
 import { UserProfile } from './AuthModals';
 import { useTranslation } from '../i18n/I18nContext';
+import { Tooltip } from './Tooltip';
 
 interface NavbarProps {
   onMenuClick: () => void;
@@ -210,30 +211,34 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
 
           {/* Search Trigger */}
-          <button 
-            onClick={onSearchClick}
-            style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            padding: '0.4rem 0.75rem',
-            borderRadius: '6px',
-            border: '1px solid var(--nexus-border)',
-            background: 'var(--nexus-bg-surface)',
-            color: 'var(--nexus-text-secondary)',
-            fontSize: '0.875rem',
-            cursor: 'pointer',
-            minWidth: '200px'
-          }} className="desktop-links">
-            <Search size={16} />
-            <span>{t('common.search')}</span>
-            <span style={{ marginLeft: 'auto', fontSize: '0.75rem', border: '1px solid var(--nexus-border)', padding: '0 4px', borderRadius: '4px' }}>{t('common.cmdK')}</span>
-          </button>
+          <Tooltip content="Search" position="bottom">
+            <button 
+              onClick={onSearchClick}
+              style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              padding: '0.4rem 0.75rem',
+              borderRadius: '6px',
+              border: '1px solid var(--nexus-border)',
+              background: 'var(--nexus-bg-surface)',
+              color: 'var(--nexus-text-secondary)',
+              fontSize: '0.875rem',
+              cursor: 'pointer',
+              minWidth: '200px'
+            }} className="desktop-links">
+              <Search size={16} />
+              <span>{t('common.search')}</span>
+              <span style={{ marginLeft: 'auto', fontSize: '0.75rem', border: '1px solid var(--nexus-border)', padding: '0 4px', borderRadius: '4px' }}>{t('common.cmdK')}</span>
+            </button>
+          </Tooltip>
           
           {/* Mobile Search Icon */}
-          <button onClick={onSearchClick} className="lg-hidden" style={{ background: 'none', border: 'none', color: 'var(--nexus-text-secondary)', padding: '0.5rem' }}>
-             <Search size={20} />
-          </button>
+          <Tooltip content="Search" position="bottom">
+            <button onClick={onSearchClick} className="lg-hidden" style={{ background: 'none', border: 'none', color: 'var(--nexus-text-secondary)', padding: '0.5rem' }}>
+              <Search size={20} />
+            </button>
+          </Tooltip>
 
           <div style={{ width: 1, height: 24, background: 'var(--nexus-border)' }} className="desktop-links"></div>
 
@@ -241,13 +246,14 @@ export const Navbar: React.FC<NavbarProps> = ({
           <div style={{ display: 'flex', alignItems: 'center' }} className="desktop-links">
              {/* Language Switcher */}
             <div style={{ position: 'relative' }} ref={langDropdownRef}>
-              <button 
-                onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--nexus-text-secondary)', display: 'flex', padding: '0.5rem' }}
-                title="Switch Language"
-              >
-                <Globe size={20} />
-              </button>
+              <Tooltip content="Switch Language" position="bottom">
+                <button 
+                  onClick={() => setIsLangMenuOpen(!isLangMenuOpen)}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--nexus-text-secondary)', display: 'flex', padding: '0.5rem' }}
+                >
+                  <Globe size={20} />
+                </button>
+              </Tooltip>
               {isLangMenuOpen && (
                 <div style={{
                     position: 'absolute', top: '100%', right: 0,
@@ -283,20 +289,23 @@ export const Navbar: React.FC<NavbarProps> = ({
               )}
             </div>
 
-            <button 
-                onClick={onFeedbackClick}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--nexus-text-secondary)', display: 'flex', alignItems: 'center', padding: '0.5rem' }}
-                title="Provide Feedback"
-            >
-                <MessageSquare size={20} />
-            </button>
+            <Tooltip content="Provide Feedback" position="bottom">
+              <button 
+                  onClick={onFeedbackClick}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--nexus-text-secondary)', display: 'flex', alignItems: 'center', padding: '0.5rem' }}
+              >
+                  <MessageSquare size={20} />
+              </button>
+            </Tooltip>
 
-            <button 
-                onClick={toggleTheme}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--nexus-text-secondary)', display: 'flex', padding: '0.5rem' }}
-            >
-                {isDark ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
+            <Tooltip content={isDark ? "Light Mode" : "Dark Mode"} position="bottom">
+              <button 
+                  onClick={toggleTheme}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--nexus-text-secondary)', display: 'flex', padding: '0.5rem' }}
+              >
+                  {isDark ? <Sun size={20} /> : <Moon size={20} />}
+              </button>
+            </Tooltip>
           </div>
 
           {/* Auth Section */}
@@ -405,8 +414,9 @@ export const Navbar: React.FC<NavbarProps> = ({
       </div>
       
       <style>{`
+        .lg-hidden { display: none; }
         @media (max-width: 768px) {
-          .desktop-links, .lg-hidden { display: none !important; }
+          .desktop-links { display: none !important; }
           .lg-hidden { display: block !important; }
         }
       `}</style>
