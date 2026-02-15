@@ -29,6 +29,7 @@
 
   /* Spacing & Layout */
   --navbar-height: 70px;
+  --sidebar-width: 280px;
   --container-width: 1440px; 
   
   /* Elevation */
@@ -36,6 +37,7 @@
   --shadow-md: 0 8px 16px rgba(148, 163, 184, 0.1);
   --shadow-lg: 0 15px 30px rgba(67, 97, 238, 0.15);
   --shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-2xl: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
   
   --radius-xl: 20px;
   --radius-lg: 12px;
@@ -61,6 +63,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  font-size: 16px;
 }
 
 body {
@@ -69,6 +76,7 @@ body {
   color: var(--nexus-text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
 a {
@@ -77,10 +85,17 @@ a {
   transition: color 0.2s;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
 h1, h2, h3, h4 {
   color: var(--nexus-text-primary);
   font-weight: 800;
   letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
 .w-full { width: 100%; }
@@ -121,6 +136,7 @@ h1, h2, h3, h4 {
   justify-content: center;
   margin-bottom: 1.5rem;
   transition: transform 0.3s ease;
+  flex-shrink: 0;
 }
 
 .card-modern:hover .icon-wrapper {
@@ -161,6 +177,7 @@ h1, h2, h3, h4 {
   align-items: center;
   box-shadow: 0 20px 40px rgba(0,0,0,0.1);
   max-width: 600px;
+  width: 100%;
   margin: 0 auto;
   border: 1px solid rgba(255,255,255,0.2);
 }
@@ -172,6 +189,7 @@ h1, h2, h3, h4 {
   outline: none;
   background: transparent;
   color: var(--nexus-text-primary);
+  min-width: 0; /* Prevent flex overflow */
 }
 .hero-search-btn {
   background: var(--nexus-primary);
@@ -185,6 +203,7 @@ h1, h2, h3, h4 {
   align-items: center;
   justify-content: center;
   transition: background 0.2s;
+  flex-shrink: 0;
 }
 
 /* Animation */
@@ -195,61 +214,17 @@ h1, h2, h3, h4 {
 }
 .float-anim { animation: float 4s ease-in-out infinite; }
 
-/* -----------------------------------------------------------------
-   RESPONSIVE & MOBILE STYLES
-   ----------------------------------------------------------------- */
-
-@media (max-width: 1024px) {
-  :root {
-    --container-width: 100%;
-  }
-  .container {
-    padding: 0 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  :root {
-    --navbar-height: 60px;
-  }
-  
-  /* Global Typography Adjustments */
-  h1 { font-size: 2.5rem !important; }
-  h2 { font-size: 2rem !important; }
-  
-  /* Stack Grids */
-  .grid-2-col, 
-  .grid-3-col,
-  .footer-grid,
-  .contact-grid {
-    grid-template-columns: 1fr !important;
-    gap: 2rem !important;
-  }
-
-  /* Padding Adjustments */
-  section { padding: 3rem 0 !important; }
-  
-  /* Component Specifics */
-  .hero-search-container {
-    max-width: 100%;
-  }
-  
-  .card-modern {
-    padding: 1.5rem;
-  }
-}
-
 /* Utility Classes for Grid Systems */
 .grid-2-col {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
   gap: 3rem;
   align-items: center;
 }
 
 .grid-3-col {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
 }
 
@@ -275,4 +250,81 @@ h1, h2, h3, h4 {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  display: inline-block;
+}
+
+/* -----------------------------------------------------------------
+   RESPONSIVE & MOBILE STYLES
+   ----------------------------------------------------------------- */
+
+@media (max-width: 1200px) {
+  :root {
+    --container-width: 100%;
+  }
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .grid-3-col {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --navbar-height: 60px;
+    --sidebar-width: 100%;
+  }
+  
+  .container {
+    padding: 0 1.25rem;
+  }
+
+  /* Typography Scaling */
+  html { font-size: 14px; }
+  h1 { font-size: 2.25rem !important; }
+  h2 { font-size: 1.75rem !important; }
+  h3 { font-size: 1.5rem !important; }
+  
+  /* Stack Grids */
+  .grid-2-col, 
+  .grid-3-col,
+  .footer-grid,
+  .contact-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+
+  /* Padding Adjustments */
+  section { padding: 3rem 0 !important; }
+  
+  /* Component Specifics */
+  .hero-search-container {
+    padding: 0.25rem;
+  }
+  .hero-search-input {
+    padding: 0.75rem 1rem;
+  }
+  
+  .card-modern {
+    padding: 1.5rem;
+  }
+  
+  /* Hide TOC by default on mobile */
+  .toc-sidebar {
+    display: none !important;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 2rem !important; }
+  
+  .hero-search-container {
+    border-radius: 12px;
+  }
+  .hero-search-btn {
+    border-radius: 8px;
+  }
 }

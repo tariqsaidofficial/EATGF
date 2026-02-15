@@ -4,7 +4,7 @@ export const resources = {
     common: {
       search: "Search...",
       searchPlaceholder: "Search documentation...",
-      searchKbPlaceholder: "Search the EATGF knowledge base...",
+      searchKbPlaceholder: "Search the knowledge base...",
       cmdK: "⌘K",
       login: "Log In",
       signup: "Sign Up",
@@ -14,10 +14,43 @@ export const resources = {
       backHome: "Go Back Home",
       notifyMe: "Notify Me When Ready",
       status: "In Development",
-      eta: "ETA: Q3 2024",
+      eta: "ETA: Q3 2026",
       selectVersion: "Select Version",
       popular: "Popular",
       viewDetails: "View Details"
+    },
+    footer: {
+      description: "The Technical Governance Framework for enterprises, startups, and developers."
+    },
+    placeholder: {
+      building: "Our engineering team is currently building this module."
+    },
+    modules: {
+      security: {
+        title: "Security & Compliance",
+        description: "Detailed SOC2, HIPAA, and GDPR compliance reports are being prepared."
+      },
+      governance: "Governance",
+      architecture: "Architecture",
+      integrations: "Integrations",
+      dataModel: "Data Model",
+      api: "API Reference",
+      changelog: "Product Changelog",
+      community: "Community Forum",
+      billing: "Billing & Plans",
+      features: "Platform Features",
+      enterprise: "Enterprise Solutions",
+      help: "Help Center",
+      apiDesc: "We are currently compiling the comprehensive REST and GraphQL API documentation.",
+      changelogDesc: "The timeline of our latest features and security patches is being updated.",
+      communityDesc: "The developer hub for discussions and support is launching soon.",
+      archDesc: "Deep dive technical diagrams and whitepapers are coming soon.",
+      dataDesc: "Schema definitions and ERD diagrams for the core platform.",
+      intDesc: "Documentation for connecting Slack, Jira, and GitHub is in progress.",
+      billingDesc: "Manage your enterprise subscription and usage quotas.",
+      featDesc: "A complete breakdown of our enterprise capabilities is on the way.",
+      entDesc: "Learn about our dedicated support, SLA, and private cloud options.",
+      helpDesc: "Browse tutorials, FAQs, and troubleshooting guides."
     },
     nav: {
       home: "Home",
@@ -41,18 +74,18 @@ export const resources = {
     },
     hero: {
       title: "How Can We Help You?",
-      subtitle: "Search here to get answers to your questions about the Enterprise AI-Aligned Technical Governance Framework.",
+      subtitle: "Search here to get answers to your questions about the Technical Governance Framework.",
     },
     home: {
       knowledgeBase: "Knowledge Base",
       exploreTopics: "Explore Our Topics",
       customerRel: "Great Customer Relationships Start Here",
-      customerRelDesc: "We provide 24/7 dedicated support for all enterprise customers. Join the community or chat with our AI assistant.",
+      customerRelDesc: "We provide 24/7 dedicated support for all customers. Join the community or chat with our AI assistant.",
       joinCommunity: "Join Community Forum",
       systemOp: "System Operational",
       mission: "Our Mission",
       missionTitle: "Empowering the World's Engineering Teams",
-      missionDesc: "The Enterprise AI-Aligned Technical Governance Framework (EATGF) is building the cloud operating system for the next generation of software. We believe in simplicity, security, and scalability for everyone."
+      missionDesc: "The Technical Governance Framework is building the cloud operating system for the next generation of software. We believe in simplicity, security, and scalability for everyone."
     },
     sidebar: {
       "Getting Started": "Getting Started",
@@ -90,9 +123,9 @@ export const resources = {
       "API Reference": "API Reference"
     },
     cards: {
-      docsDesc: "Core guides for the EATGF Platform.",
+      docsDesc: "Core guides for the Platform.",
       apiDesc: "Complete REST API documentation.",
-      govDesc: "SOC2, GDPR, and AI compliance info.",
+      govDesc: "SOC2, GDPR, and compliance info.",
       archDesc: "Deep dive into system design.",
       dataDesc: "Understanding schemas and storage.",
       intDesc: "Connect with Slack, Jira, and Github.",
@@ -118,10 +151,43 @@ export const resources = {
       backHome: "Volver al Inicio",
       notifyMe: "Notificarme",
       status: "En Desarrollo",
-      eta: "ETA: T3 2024",
+      eta: "ETA: T3 2026",
       selectVersion: "Versión",
       popular: "Popular",
       viewDetails: "Ver Detalles"
+    },
+    footer: {
+      description: "El Marco de Gobernanza Técnica para empresas, startups y desarrolladores."
+    },
+    placeholder: {
+      building: "Nuestro equipo de ingeniería está construyendo este módulo actualmente."
+    },
+    modules: {
+      security: {
+        title: "Seguridad y Cumplimiento",
+        description: "Se están preparando informes detallados de cumplimiento SOC2, HIPAA y GDPR."
+      },
+      governance: "Gobernanza",
+      architecture: "Arquitectura",
+      integrations: "Integraciones",
+      dataModel: "Modelo de Datos",
+      api: "Referencia API",
+      changelog: "Historial del Producto",
+      community: "Foro de la Comunidad",
+      billing: "Facturación y Planes",
+      features: "Características de la Plataforma",
+      enterprise: "Soluciones Empresariales",
+      help: "Centro de Ayuda",
+      apiDesc: "Actualmente estamos recopilando la documentación completa de API REST y GraphQL.",
+      changelogDesc: "La línea de tiempo de nuestras últimas características y parches de seguridad se está actualizando.",
+      communityDesc: "El centro de desarrolladores para discusiones y soporte se lanzará pronto.",
+      archDesc: "Próximamente diagramas técnicos detallados y libros blancos.",
+      dataDesc: "Definiciones de esquema y diagramas ERD para la plataforma principal.",
+      intDesc: "La documentación para conectar Slack, Jira y GitHub está en progreso.",
+      billingDesc: "Gestiona tu suscripción empresarial y cuotas de uso.",
+      featDesc: "Un desglose completo de nuestras capacidades empresariales está en camino.",
+      entDesc: "Aprende sobre nuestro soporte dedicado, SLA y opciones de nube privada.",
+      helpDesc: "Navega por tutoriales, preguntas frecuentes y guías de solución de problemas."
     },
     nav: {
       home: "Inicio",
@@ -145,18 +211,18 @@ export const resources = {
     },
     hero: {
       title: "¿Cómo podemos ayudarte?",
-      subtitle: "Busca aquí respuestas sobre el Marco de Gobernanza Técnica Alineada con IA Empresarial.",
+      subtitle: "Busca aquí respuestas sobre el Marco de Gobernanza Técnica.",
     },
     home: {
       knowledgeBase: "Base de Conocimientos",
       exploreTopics: "Explora Nuestros Temas",
       customerRel: "Las Grandes Relaciones Comienzan Aquí",
-      customerRelDesc: "Ofrecemos soporte dedicado 24/7 para clientes empresariales. Únete a la comunidad o chatea con nuestro asistente IA.",
+      customerRelDesc: "Ofrecemos soporte dedicado 24/7 para todos los clientes. Únete a la comunidad o chatea con nuestro asistente IA.",
       joinCommunity: "Unirse al Foro",
       systemOp: "Sistema Operativo",
       mission: "Nuestra Misión",
       missionTitle: "Potenciando Equipos de Ingeniería",
-      missionDesc: "EATGF está construyendo el sistema operativo en la nube para la próxima generación de software. Creemos en la simplicidad, seguridad y escalabilidad para todos."
+      missionDesc: "El Marco de Gobernanza Técnica está construyendo el sistema operativo en la nube para la próxima generación de software. Creemos en la simplicidad, seguridad y escalabilidad para todos."
     },
     sidebar: {
       "Getting Started": "Comenzando",
@@ -194,9 +260,9 @@ export const resources = {
       "API Reference": "Referencia API"
     },
     cards: {
-      docsDesc: "Guías principales para la plataforma EATGF.",
+      docsDesc: "Guías principales para la plataforma.",
       apiDesc: "Documentación completa de API REST.",
-      govDesc: "Información de SOC2, GDPR y cumplimiento de IA.",
+      govDesc: "Información de SOC2, GDPR y cumplimiento.",
       archDesc: "Profundiza en el diseño del sistema.",
       dataDesc: "Entendiendo esquemas y almacenamiento.",
       intDesc: "Conecta con Slack, Jira y Github.",
@@ -206,6 +272,280 @@ export const resources = {
       transparencyDesc: "Creemos en el código abierto y la comunicación honesta con nuestra comunidad.",
       globalImpact: "Impacto Global",
       globalImpactDesc: "Nuestra infraestructura impulsa sistemas críticos en más de 35 países alrededor del mundo."
+    }
+  },
+  ar: {
+    common: {
+      search: "بحث...",
+      searchPlaceholder: "البحث في الوثائق...",
+      searchKbPlaceholder: "البحث في قاعدة المعرفة...",
+      cmdK: "⌘K",
+      login: "تسجيل الدخول",
+      signup: "اشتراك",
+      logout: "تسجيل الخروج",
+      profile: "الملف الشخصي",
+      settings: "إعدادات",
+      backHome: "العودة للرئيسية",
+      notifyMe: "أعلمني",
+      status: "قيد التطوير",
+      eta: "المتوقع: الربع الثالث 2026",
+      selectVersion: "الإصدار",
+      popular: "شائع",
+      viewDetails: "عرض التفاصيل"
+    },
+    footer: {
+      description: "إطار الحوكمة التقنية للمؤسسات والشركات الناشئة والمطورين."
+    },
+    placeholder: {
+      building: "يقوم فريق الهندسة لدينا حالياً ببناء هذه الوحدة."
+    },
+    modules: {
+      security: {
+        title: "الأمن والامتثال",
+        description: "يتم إعداد تقارير مفصلة عن الامتثال لـ SOC2 و HIPAA و GDPR."
+      },
+      governance: "الحوكمة",
+      architecture: "الهندسة المعمارية",
+      integrations: "التكاملات",
+      dataModel: "نموذج البيانات",
+      api: "مرجع API",
+      changelog: "سجل تغييرات المنتج",
+      community: "منتدى المجتمع",
+      billing: "الفواتير والخطط",
+      features: "ميزات المنصة",
+      enterprise: "حلول المؤسسات",
+      help: "مركز المساعدة",
+      apiDesc: "نقوم حالياً بتجميع وثائق REST و GraphQL API الشاملة.",
+      changelogDesc: "يتم تحديث الجدول الزمني لأحدث ميزاتنا وتصحيحات الأمان.",
+      communityDesc: "سيتم إطلاق مركز المطورين للمناقشات والدعم قريباً.",
+      archDesc: "الرسوم البيانية التقنية العميقة والأوراق البيضاء قادمة قريباً.",
+      dataDesc: "تعريفات المخطط ورسوم ERD للمنصة الأساسية.",
+      intDesc: "وثائق ربط Slack و Jira و GitHub قيد الإعداد.",
+      billingDesc: "إدارة اشتراك المؤسسة وحصص الاستخدام.",
+      featDesc: "تفصيل كامل لقدراتنا المؤسسية في الطريق.",
+      entDesc: "تعرف على الدعم المخصص، واتفاقية مستوى الخدمة، وخيارات السحابة الخاصة.",
+      helpDesc: "تصفح الدروس التعليمية والأسئلة الشائعة وأدلة استكشاف الأخطاء وإصلاحها."
+    },
+    nav: {
+      home: "الرئيسية",
+      docs: "الوثائق",
+      api: "مرجع API",
+      community: "المجتمع",
+      changelog: "سجل التغييرات",
+      features: "الميزات",
+      enterprise: "مؤسسي",
+      security: "الحماية",
+      help: "مركز المساعدة",
+      about: "عنا",
+      careers: "وظائف",
+      legal: "قانوني",
+      contact: "اتصل بنا",
+      privacy: "الخصوصية",
+      terms: "الشروط",
+      cookies: "ملفات تعريف الارتباط",
+      integrations: "التكاملات",
+      billing: "الفواتير"
+    },
+    hero: {
+      title: "كيف يمكننا مساعدتك؟",
+      subtitle: "ابحث هنا للحصول على إجابات حول إطار الحوكمة التقنية.",
+    },
+    home: {
+      knowledgeBase: "قاعدة المعرفة",
+      exploreTopics: "استكشف مواضيعنا",
+      customerRel: "العلاقات العظيمة تبدأ هنا",
+      customerRelDesc: "نحن نقدم دعمًا مخصصًا على مدار الساعة طوال أيام الأسبوع لجميع العملاء. انضم إلى المجتمع أو تحدث مع مساعد الذكاء الاصطناعي.",
+      joinCommunity: "انضم للمنتدى",
+      systemOp: "النظام يعمل",
+      mission: "مهمتنا",
+      missionTitle: "تمكين فرق الهندسة في العالم",
+      missionDesc: "إطار الحوكمة التقنية يبني نظام تشغيل سحابي للجيل القادم من البرمجيات. نؤمن بالبساطة والأمان والقابلية للتوسع للجميع."
+    },
+    sidebar: {
+      "Getting Started": "البداية",
+      intro: "مقدمة",
+      install: "تثبيت",
+      "install-cli": "إعداد CLI",
+      "install-docker": "حاوية Docker",
+      "install-k8s": "Kubernetes Helm",
+      quickstart: "بداية سريعة",
+      "Core Concepts": "مفاهيم أساسية",
+      architecture: "الهندسة",
+      "data-model": "نموذج البيانات",
+      authentication: "المصادقة",
+      "Platform Security": "أمان المنصة",
+      compliance: "الامتثال و SOC2",
+      encryption: "التشفير",
+      "enc-at-rest": "في السكون",
+      "enc-transit": "في النقل",
+      "enc-keys": "إدارة المفاتيح",
+      sso: "تكوين SSO",
+      "Advanced Guides": "أدلة متقدمة",
+      "seo-performance": "SEO والأداء",
+      "i18n-config": "التدويل (i18n)",
+      "enterprise-plugins": "إضافات المؤسسات",
+      "API Reference": "مرجع API",
+      "api-overview": "نظرة عامة",
+      "rate-limits": "حدود المعدل",
+      errors: "معالجة الأخطاء"
+    },
+    categories: {
+      "Getting Started": "البداية",
+      "Core Concepts": "مفاهيم أساسية",
+      "Platform Security": "أمان المنصة",
+      "Advanced Guides": "أدلة متقدمة",
+      "API Reference": "مرجع API"
+    },
+    cards: {
+      docsDesc: "أدلة أساسية للمنصة.",
+      apiDesc: "توثيق كامل لـ REST API.",
+      govDesc: "معلومات حول SOC2 و GDPR والامتثال.",
+      archDesc: "تعمق في تصميم النظام.",
+      dataDesc: "فهم المخططات والتخزين.",
+      intDesc: "تواصل مع Slack و Jira و Github.",
+      custObsession: "الهوس بالعملاء",
+      custObsessionDesc: "نبدأ مع العميل ونعمل بشكل عكسي. كل سطر من الكود يخدم حاجة المستخدم.",
+      transparency: "شفافية جذرية",
+      transparencyDesc: "نحن نؤمن بالمصدر المفتوح والخرائط المفتوحة والتواصل الصادق مع مجتمعنا.",
+      globalImpact: "تأثير عالمي",
+      globalImpactDesc: "بنيتنا التحتية تشغل أنظمة حيوية في أكثر من 35 دولة حول العالم."
+    }
+  },
+  fr: {
+    common: {
+      search: "Rechercher...",
+      searchPlaceholder: "Rechercher dans la documentation...",
+      searchKbPlaceholder: "Rechercher dans la base de connaissances...",
+      cmdK: "⌘K",
+      login: "Connexion",
+      signup: "S'inscrire",
+      logout: "Déconnexion",
+      profile: "Profil",
+      settings: "Paramètres",
+      backHome: "Retour à l'accueil",
+      notifyMe: "M'avertir",
+      status: "En développement",
+      eta: "ETA: T3 2026",
+      selectVersion: "Version",
+      popular: "Populaire",
+      viewDetails: "Voir les détails"
+    },
+    footer: {
+      description: "Le Cadre de Gouvernance Technique pour les entreprises, les startups et les développeurs."
+    },
+    placeholder: {
+      building: "Notre équipe d'ingénierie construit actuellement ce module."
+    },
+    modules: {
+      security: {
+        title: "Sécurité & Conformité",
+        description: "Des rapports détaillés de conformité SOC2, HIPAA et GDPR sont en cours de préparation."
+      },
+      governance: "Gouvernance",
+      architecture: "Architecture",
+      integrations: "Intégrations",
+      dataModel: "Modèle de Données",
+      api: "Référence API",
+      changelog: "Journal des modifications produit",
+      community: "Forum communautaire",
+      billing: "Facturation & Plans",
+      features: "Fonctionnalités de la plateforme",
+      enterprise: "Solutions d'entreprise",
+      help: "Centre d'aide",
+      apiDesc: "Nous compilons actuellement la documentation complète de l'API REST et GraphQL.",
+      changelogDesc: "La chronologie de nos dernières fonctionnalités et correctifs de sécurité est en cours de mise à jour.",
+      communityDesc: "Le hub développeur pour les discussions et le support sera bientôt lancé.",
+      archDesc: "Des diagrammes techniques approfondis et des livres blancs arrivent bientôt.",
+      dataDesc: "Définitions de schémas et diagrammes ERD pour la plateforme principale.",
+      intDesc: "La documentation pour connecter Slack, Jira et GitHub est en cours.",
+      billingDesc: "Gérez votre abonnement d'entreprise et vos quotas d'utilisation.",
+      featDesc: "Une analyse complète de nos capacités d'entreprise est en route.",
+      entDesc: "Découvrez notre support dédié, nos SLA et nos options de cloud privé.",
+      helpDesc: "Parcourez les tutoriels, les FAQ et les guides de dépannage."
+    },
+    nav: {
+      home: "Accueil",
+      docs: "Documentation",
+      api: "Référence API",
+      community: "Communauté",
+      changelog: "Journal des modifications",
+      features: "Fonctionnalités",
+      enterprise: "Entreprise",
+      security: "Sécurité",
+      help: "Centre d'aide",
+      about: "À propos",
+      careers: "Carrières",
+      legal: "Légal",
+      contact: "Contact",
+      privacy: "Confidentialité",
+      terms: "Conditions",
+      cookies: "Cookies",
+      integrations: "Intégrations",
+      billing: "Facturation"
+    },
+    hero: {
+      title: "Comment pouvons-nous vous aider ?",
+      subtitle: "Recherchez ici pour obtenir des réponses sur le Cadre de Gouvernance Technique.",
+    },
+    home: {
+      knowledgeBase: "Base de Connaissances",
+      exploreTopics: "Explorez nos Sujets",
+      customerRel: "Les Grandes Relations Commencent Ici",
+      customerRelDesc: "Nous offrons un support dédié 24/7 pour tous les clients. Rejoignez la communauté ou discutez avec notre assistant IA.",
+      joinCommunity: "Rejoindre le Forum",
+      systemOp: "Système Opérationnel",
+      mission: "Notre Mission",
+      missionTitle: "Autonomiser les Équipes d'Ingénierie",
+      missionDesc: "Le Cadre de Gouvernance Technique construit le système d'exploitation cloud pour la prochaine génération de logiciels. Nous croyons en la simplicité, la sécurité et l'évolutivité pour tous."
+    },
+    sidebar: {
+      "Getting Started": "Commencer",
+      intro: "Introduction",
+      install: "Installation",
+      "install-cli": "Configuration CLI",
+      "install-docker": "Conteneur Docker",
+      "install-k8s": "Kubernetes Helm",
+      quickstart: "Démarrage Rapide",
+      "Core Concepts": "Concepts Clés",
+      architecture: "Architecture",
+      "data-model": "Modèle de Données",
+      authentication: "Authentification",
+      "Platform Security": "Sécurité de la Plateforme",
+      compliance: "Conformité & SOC2",
+      encryption: "Chiffrement",
+      "enc-at-rest": "Au Repos",
+      "enc-transit": "En Transit",
+      "enc-keys": "Gestion des Clés",
+      sso: "Configuration SSO",
+      "Advanced Guides": "Guides Avancés",
+      "seo-performance": "SEO & Performance",
+      "i18n-config": "Internationalisation",
+      "enterprise-plugins": "Plugins d'Entreprise",
+      "API Reference": "Référence API",
+      "api-overview": "Vue d'ensemble",
+      "rate-limits": "Limites de Taux",
+      errors: "Gestion des Erreurs"
+    },
+    categories: {
+      "Getting Started": "Commencer",
+      "Core Concepts": "Concepts Clés",
+      "Platform Security": "Sécurité de la Plateforme",
+      "Advanced Guides": "Guides Avancés",
+      "API Reference": "Référence API"
+    },
+    cards: {
+      docsDesc: "Guides principaux pour la plateforme.",
+      apiDesc: "Documentation complète de l'API REST.",
+      govDesc: "Infos sur SOC2, GDPR et conformité.",
+      archDesc: "Plongée dans la conception du système.",
+      dataDesc: "Comprendre les schémas et le stockage.",
+      intDesc: "Connectez avec Slack, Jira et Github.",
+      custObsession: "Obsession Client",
+      custObsessionDesc: "Nous commençons par le client et travaillons à rebours. Chaque ligne de code répond à un besoin utilisateur.",
+      transparency: "Transparence Radicale",
+      transparencyDesc: "Nous croyons en l'open source, aux feuilles de route ouvertes et à la communication honnête.",
+      globalImpact: "Impact Mondial",
+      globalImpactDesc: "Notre infrastructure alimente des systèmes critiques dans plus de 35 pays."
     }
   }
 };

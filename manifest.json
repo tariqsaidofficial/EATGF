@@ -1,12 +1,12 @@
 
 {
-  "name": "Enterprise AI-Aligned Technical Governance Framework",
+  "name": "Technical Governance Framework",
   "short_name": "EATGF",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#F8F9FF",
   "theme_color": "#4361EE",
-  "description": "Enterprise documentation and support platform.",
+  "description": "Documentation and support platform for enterprises, startups, and developers.",
   "icons": [
     {
       "src": "https://cdn.jsdelivr.net/gh/walkxcode/dashboard-icons/png/google-cloud.png",

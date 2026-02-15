@@ -13,7 +13,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
 
   return (
     <main style={{ width: '100%' }}>
-      {/* Hero Section with Docfi Vibes - Full Width */}
+      {/* Hero Section */}
       <section style={{
         position: 'relative',
         padding: '8rem 0 10rem',
@@ -22,17 +22,19 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
         overflow: 'hidden',
         width: '100%',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center'
       }}>
         {/* Floating Background Elements (Abstract) */}
-        <div style={{ position: 'absolute', top: '10%', left: '5%', opacity: 0.1 }}>
+        <div style={{ position: 'absolute', top: '10%', left: '5%', opacity: 0.1, pointerEvents: 'none' }} className="lg-hidden">
             <Layers size={120} />
         </div>
-        <div style={{ position: 'absolute', bottom: '20%', right: '5%', opacity: 0.1 }}>
+        <div style={{ position: 'absolute', bottom: '20%', right: '5%', opacity: 0.1, pointerEvents: 'none' }} className="lg-hidden">
             <Code size={120} />
         </div>
 
-        <div className="container" style={{ position: 'relative', zIndex: 10, textAlign: 'center' }}>
+        <div className="container" style={{ position: 'relative', zIndex: 10, textAlign: 'center', width: '100%' }}>
           
           <h1 style={{ 
             fontSize: 'clamp(2.5rem, 5vw, 4rem)', 
@@ -44,7 +46,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
             {t('hero.title')}
           </h1>
           
-          <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '800px', margin: '0 auto 3rem' }}>
+          <p style={{ fontSize: '1.25rem', opacity: 0.9, marginBottom: '3rem', maxWidth: '800px', margin: '0 auto 3rem', lineHeight: 1.5 }}>
              {t('hero.subtitle')}
           </p>
 
@@ -56,13 +58,16 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
               placeholder={t('common.searchKbPlaceholder')} 
               onChange={(e) => onSearch && onSearch(e.target.value)}
             />
-            <button className="hero-search-btn" onClick={() => onNavigate('docs')}>
+            <button className="hero-search-btn" onClick={() => onNavigate('docs')} aria-label="Search Docs">
               <Search size={20} />
             </button>
           </div>
           
-          <div style={{ marginTop: '1.5rem', fontSize: '0.9rem', opacity: 0.8 }}>
-            {t('common.popular')}: <span onClick={() => onNavigate('docs')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Framework Setup</span>, <span onClick={() => onNavigate('security')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Governance</span>, <span onClick={() => onNavigate('billing')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Compliance</span>
+          <div style={{ marginTop: '1.5rem', fontSize: '0.9rem', opacity: 0.8, display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0.5rem' }}>
+            <span>{t('common.popular')}:</span>
+            <span onClick={() => onNavigate('docs')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Framework Setup</span>, 
+            <span onClick={() => onNavigate('security')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>{t('modules.governance')}</span>, 
+            <span onClick={() => onNavigate('billing')} style={{ textDecoration: 'underline', cursor: 'pointer' }}>Compliance</span>
           </div>
 
         </div>
@@ -75,7 +80,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
         </div>
       </section>
 
-      {/* Topics Grid - Full Width Wrapper */}
+      {/* Topics Grid */}
       <section style={{ padding: '4rem 0 6rem', marginTop: '-4rem', position: 'relative', zIndex: 20, width: '100%', display: 'flex', justifyContent: 'center' }}>
         <div className="container">
            <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
@@ -83,11 +88,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
              <h2 style={{ fontSize: '2rem', marginTop: '0.5rem' }}>{t('home.exploreTopics')}</h2>
            </div>
            
-           <div style={{ 
-             display: 'grid', 
-             gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
-             gap: '2rem' 
-           }}>
+           <div className="grid-3-col">
              <DocCard 
                icon={<Book size={28} />} 
                color="blue"
@@ -107,7 +108,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
              <DocCard 
                icon={<Shield size={28} />} 
                color="pink"
-               title="Governance" 
+               title={t('modules.governance')}
                desc={t('cards.govDesc')}
                onClick={() => onNavigate('security')}
                btnText={t('common.viewDetails')}
@@ -115,7 +116,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
              <DocCard 
                icon={<Layers size={28} />} 
                color="teal"
-               title="Architecture" 
+               title={t('modules.architecture')}
                desc={t('cards.archDesc')}
                onClick={() => onNavigate('architecture')}
                btnText={t('common.viewDetails')}
@@ -123,7 +124,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
              <DocCard 
                icon={<Database size={28} />} 
                color="orange"
-               title="Data Model" 
+               title={t('modules.dataModel')}
                desc={t('cards.dataDesc')}
                onClick={() => onNavigate('datamodel')}
                btnText={t('common.viewDetails')}
@@ -131,7 +132,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
              <DocCard 
                icon={<Zap size={28} />} 
                color="blue"
-               title="Integrations" 
+               title={t('modules.integrations')} 
                desc={t('cards.intDesc')}
                onClick={() => onNavigate('integrations')}
                btnText={t('common.viewDetails')}
@@ -140,9 +141,9 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
         </div>
       </section>
 
-      {/* Trust/Support Section - Full Width */}
+      {/* Trust/Support Section */}
       <section style={{ padding: '6rem 0', background: 'white', width: '100%', display: 'flex', justifyContent: 'center' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', alignItems: 'center' }}>
+        <div className="container grid-2-col">
           <div>
              <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem', lineHeight: 1.2 }}>
                {t('home.customerRel')}
@@ -173,7 +174,8 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'center',
-            position: 'relative' 
+            position: 'relative',
+            width: '100%'
           }}>
              <div style={{ position: 'absolute', top: -20, right: -20, background: 'white', padding: '1rem', borderRadius: '16px', boxShadow: 'var(--shadow-lg)' }}>
                 <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>

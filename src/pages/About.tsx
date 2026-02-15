@@ -19,7 +19,7 @@ export const About: React.FC = () => {
             Empowering the World's <br/> <span style={{ color: 'var(--nexus-primary)' }}>Engineering Teams</span>
           </h1>
           <p style={{ fontSize: '1.25rem', color: 'var(--nexus-text-secondary)', maxWidth: '700px', margin: '0 auto' }}>
-            The Enterprise AI-Aligned Technical Governance Framework (EATGF) is building the cloud operating system for the next generation of software. We believe in simplicity, security, and scalability for everyone.
+            The Technical Governance Framework (EATGF) is building the cloud operating system for the next generation of software. We believe in simplicity, security, and scalability for everyone.
           </p>
         </div>
       </section>

@@ -31,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <span style={{ fontWeight: 700, fontSize: '1.25rem' }}>EATGF</span>
             </div>
             <p style={{ fontSize: '0.9rem', lineHeight: 1.6, maxWidth: '280px' }}>
-              The Enterprise AI-Aligned Technical Governance Framework for modern engineering teams.
+              {t('footer.description')}
             </p>
           </div>
 

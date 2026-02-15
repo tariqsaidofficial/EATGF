@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Sidebar, SIDEBAR_ITEMS, SidebarItemDef } from '../components/Sidebar';
-import { ChevronRight, Check, Copy, Sparkles, Loader2, Star, Search, Server, Globe, Puzzle, Zap, Activity, Shield } from 'lucide-react';
+import { ChevronRight, Check, Copy, Sparkles, Loader2, Star, Search, Server, Globe, Puzzle, Zap, Activity, Shield, Menu, X } from 'lucide-react';
 import { summarizeContent } from '../services/GeminiService';
 import { FavoriteItem } from './Profile';
 import { useTranslation } from '../i18n/I18nContext';
@@ -114,6 +114,7 @@ export const Documentation: React.FC<DocumentationProps> = ({
   const [isSummarizing, setIsSummarizing] = useState(false);
   const [headings, setHeadings] = useState<Heading[]>([]);
   const [activeHeadingId, setActiveHeadingId] = useState<string>('');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   
   const pageContentRef = useRef<HTMLDivElement>(null);
   
@@ -130,6 +131,7 @@ export const Documentation: React.FC<DocumentationProps> = ({
     // Scroll to top on doc change
     window.scrollTo({ top: 0, behavior: 'smooth' });
     setSummary(null); // clear summary
+    setIsMobileSidebarOpen(false); // Close mobile menu on nav
   }, [activeDoc]);
 
   useEffect(() => {
@@ -382,10 +384,10 @@ module.exports = {
         return (
           <>
             <p style={{ fontSize: '1.125rem', color: 'var(--nexus-text-secondary)', marginBottom: '2rem' }}>
-              The <strong>Enterprise AI-Aligned Technical Governance Framework (EATGF)</strong> is a unified knowledge and cloud orchestration platform designed for high-scale enterprise environments. This guide covers the architectural principles and basic setup.
+              The <strong>Technical Governance Framework (EATGF)</strong> is a unified knowledge and cloud orchestration platform designed for enterprises, startups, and developers. This guide covers the architectural principles and basic setup.
             </p>
 
-            <Note title="Enterprise Note">
+            <Note title="Important Note">
               This documentation applies to EATGF v2.4+. If you are on a legacy version (v1.x), please switch the version dropdown in the navbar.
             </Note>
 
@@ -417,7 +419,7 @@ module.exports = {
             <h2 id="next-steps" style={{ fontSize: '1.75rem', marginTop: '2.5rem', marginBottom: '1rem', borderBottom: '1px solid var(--nexus-border)', paddingBottom: '0.5rem' }}>
               Next Steps
             </h2>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginTop: '1.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1rem', marginTop: '1.5rem' }}>
                <button onClick={() => onDocChange('authentication')} style={{ 
                  display: 'block', padding: '1.5rem', border: '1px solid var(--nexus-border)', background: 'transparent',
                  borderRadius: '8px', color: 'inherit', textDecoration: 'none', textAlign: 'left', cursor: 'pointer' 
@@ -440,10 +442,50 @@ module.exports = {
 
   return (
     <div style={{ display: 'flex', width: '100%', minHeight: 'calc(100vh - var(--navbar-height))' }}>
-      {/* Sidebar - Fixed Left */}
+      {/* Sidebar - Desktop */}
       <div className="sidebar-container" style={{ flexShrink: 0 }}>
         <Sidebar activeDoc={activeDoc} onSelectDoc={onDocChange} />
       </div>
+
+      {/* Mobile Sidebar Button & Drawer */}
+      <div className="lg-hidden" style={{ 
+         position: 'fixed', 
+         bottom: '2rem', 
+         left: '2rem', 
+         zIndex: 40 
+      }}>
+         <button 
+           onClick={() => setIsMobileSidebarOpen(true)}
+           style={{
+             width: '56px', height: '56px', borderRadius: '50%',
+             background: 'var(--nexus-bg-surface)', border: '1px solid var(--nexus-border)',
+             boxShadow: 'var(--shadow-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+             color: 'var(--nexus-text-primary)'
+           }}
+         >
+           <Menu size={24} />
+         </button>
+      </div>
+
+      {isMobileSidebarOpen && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 100, display: 'flex'
+        }}>
+          <div style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(2px)' }} onClick={() => setIsMobileSidebarOpen(false)} />
+          <div style={{
+            width: '85%', maxWidth: '300px', background: 'var(--nexus-bg-root)',
+            height: '100%', position: 'relative', zIndex: 110,
+            borderRight: '1px solid var(--nexus-border)', display: 'flex', flexDirection: 'column',
+            animation: 'slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1)'
+          }}>
+             <div style={{ padding: '1rem', borderBottom: '1px solid var(--nexus-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+               <span style={{ fontWeight: 700 }}>Documentation</span>
+               <button onClick={() => setIsMobileSidebarOpen(false)} style={{ background: 'none', border: 'none', padding: '0.5rem' }}><X size={20} /></button>
+             </div>
+             <Sidebar activeDoc={activeDoc} onSelectDoc={onDocChange} />
+          </div>
+        </div>
+      )}
       
       {/* Main Content - Fluid Center */}
       <main style={{ 
@@ -451,7 +493,8 @@ module.exports = {
         padding: '3rem 4rem', 
         minWidth: 0, 
         maxWidth: '1200px', 
-        margin: '0 auto'
+        margin: '0 auto',
+        width: '100%'
       }}>
           
           {/* Functional Search Bar */}
@@ -505,13 +548,13 @@ module.exports = {
                borderRadius: '4px',
                color: 'var(--nexus-text-secondary)',
                pointerEvents: 'none'
-             }}>
+             }} className="desktop-links">
                {t('common.cmdK')}
              </div>
           </div>
 
           {/* Breadcrumbs */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--nexus-text-secondary)', fontSize: '0.875rem', marginBottom: '2rem' }}>
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'var(--nexus-text-secondary)', fontSize: '0.875rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
             <span>Docs</span>
             <ChevronRight size={14} />
             <span>{translatedCategory}</span>
@@ -546,8 +589,8 @@ module.exports = {
 
           {/* Content */}
           <article ref={pageContentRef}>
-            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
-              <h1 style={{ fontSize: '2.5rem', margin: 0, display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+              <h1 style={{ fontSize: '2.5rem', margin: 0, display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                 {translatedLabel}
                 <button 
                   onClick={handleStarClick}
@@ -640,7 +683,6 @@ module.exports = {
       <style>{`
         @media (max-width: 1200px) {
           .toc-sidebar { display: none !important; }
-          main { padding-right: 2rem !important; }
         }
         @media (max-width: 768px) {
           .sidebar-container { display: none !important; }
@@ -649,6 +691,10 @@ module.exports = {
         @keyframes spin {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
+        }
+        @keyframes slideIn {
+          from { transform: translateX(-100%); }
+          to { transform: translateX(0); }
         }
         .spin {
           animation: spin 1s linear infinite;

@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { resources } from './resources';
 
-type Language = 'en' | 'es';
+type Language = 'en' | 'es' | 'fr' | 'ar';
 
 interface I18nContextType {
   language: Language;
@@ -18,10 +18,16 @@ export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children
   // Load language from local storage on mount
   useEffect(() => {
     const savedLang = localStorage.getItem('nexus_lang') as Language;
-    if (savedLang && (savedLang === 'en' || savedLang === 'es')) {
+    if (savedLang && ['en', 'es', 'fr', 'ar'].includes(savedLang)) {
       setLanguage(savedLang);
     }
   }, []);
+
+  // Handle HTML dir/lang attributes for RTL support
+  useEffect(() => {
+    document.documentElement.lang = language;
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+  }, [language]);
 
   const changeLanguage = (lang: Language) => {
     setLanguage(lang);

@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Construction, ArrowLeft, Bell } from 'lucide-react';
+import { useTranslation } from '../i18n/I18nContext';
 
 interface PlaceholderPageProps {
   title: string;
@@ -9,6 +10,8 @@ interface PlaceholderPageProps {
 }
 
 export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ title, description, onGoHome }) => {
+  const { t } = useTranslation();
+
   return (
     <div style={{
       minHeight: '80vh',
@@ -38,7 +41,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ title, descrip
       </h1>
       
       <p style={{ fontSize: '1.25rem', color: 'var(--nexus-text-secondary)', maxWidth: '600px', marginBottom: '3rem' }}>
-        {description} <br/> Our engineering team is currently building this module.
+        {description} <br/> {t('placeholder.building')}
       </p>
 
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap', justifyContent: 'center' }}>
@@ -61,7 +64,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ title, descrip
           onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-surface-hover)'}
           onMouseLeave={e => e.currentTarget.style.background = 'var(--nexus-bg-surface)'}
         >
-          <ArrowLeft size={20} /> Go Back Home
+          <ArrowLeft size={20} /> {t('common.backHome')}
         </button>
 
         <button style={{
@@ -78,12 +81,12 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ title, descrip
           gap: '0.5rem',
           boxShadow: 'var(--shadow-lg)'
         }}>
-          <Bell size={20} /> Notify Me When Ready
+          <Bell size={20} /> {t('common.notifyMe')}
         </button>
       </div>
 
       <div style={{ marginTop: '4rem', padding: '1rem', border: '1px dashed var(--nexus-border)', borderRadius: '8px', color: 'var(--nexus-text-secondary)', fontSize: '0.9rem' }}>
-        Status: <span style={{ color: 'var(--nexus-warning)', fontWeight: 600 }}>In Development</span> • ETA: Q3 2024
+        Status: <span style={{ color: 'var(--nexus-warning)', fontWeight: 600 }}>{t('common.status')}</span> • {t('common.eta')}
       </div>
     </div>
   );

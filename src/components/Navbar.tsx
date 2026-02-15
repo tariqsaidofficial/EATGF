@@ -50,6 +50,13 @@ export const Navbar: React.FC<NavbarProps> = ({
     { label: 'Next', tag: 'Beta' },
   ];
 
+  const languages = [
+    { code: 'en', label: 'English', flag: '🇺🇸' },
+    { code: 'ar', label: 'العربية', flag: '🇸🇦' },
+    { code: 'fr', label: 'Français', flag: '🇫🇷' },
+    { code: 'es', label: 'Español', flag: '🇪🇸' },
+  ];
+
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (versionDropdownRef.current && !versionDropdownRef.current.contains(event.target as Node)) {
@@ -257,34 +264,27 @@ export const Navbar: React.FC<NavbarProps> = ({
               {isLangMenuOpen && (
                 <div style={{
                     position: 'absolute', top: '100%', right: 0,
-                    width: '120px', background: 'var(--nexus-bg-surface)',
+                    width: '160px', background: 'var(--nexus-bg-surface)',
                     border: '1px solid var(--nexus-border)', borderRadius: '8px',
                     boxShadow: 'var(--shadow-md)', zIndex: 100, overflow: 'hidden'
                 }}>
-                  <button 
-                    onClick={() => { setLanguage('en'); setIsLangMenuOpen(false); }}
-                    style={{ 
-                        width: '100%', padding: '0.5rem 1rem', textAlign: 'left', border: 'none', background: 'transparent',
-                        color: language === 'en' ? 'var(--nexus-primary)' : 'var(--nexus-text-primary)',
-                        fontWeight: language === 'en' ? 600 : 400, cursor: 'pointer'
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-surface-hover)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                  >
-                    English
-                  </button>
-                  <button 
-                    onClick={() => { setLanguage('es'); setIsLangMenuOpen(false); }}
-                    style={{ 
-                        width: '100%', padding: '0.5rem 1rem', textAlign: 'left', border: 'none', background: 'transparent',
-                        color: language === 'es' ? 'var(--nexus-primary)' : 'var(--nexus-text-primary)',
-                        fontWeight: language === 'es' ? 600 : 400, cursor: 'pointer'
-                    }}
-                    onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-surface-hover)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
-                  >
-                    Español
-                  </button>
+                  {languages.map(lang => (
+                    <button 
+                        key={lang.code}
+                        onClick={() => { setLanguage(lang.code as any); setIsLangMenuOpen(false); }}
+                        style={{ 
+                            width: '100%', padding: '0.5rem 1rem', textAlign: 'left', border: 'none', background: 'transparent',
+                            color: language === lang.code ? 'var(--nexus-primary)' : 'var(--nexus-text-primary)',
+                            fontWeight: language === lang.code ? 600 : 400, cursor: 'pointer',
+                            display: 'flex', alignItems: 'center', gap: '0.75rem'
+                        }}
+                        onMouseEnter={e => e.currentTarget.style.background = 'var(--nexus-bg-surface-hover)'}
+                        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+                    >
+                        <span style={{ fontSize: '1.2em' }}>{lang.flag}</span>
+                        {lang.label}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>

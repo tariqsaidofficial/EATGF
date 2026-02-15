@@ -9,7 +9,7 @@ import { SearchModal } from './components/SearchModal';
 import { FeedbackModal } from './components/FeedbackModal';
 import { ChatWidget } from './components/ChatWidget';
 import { AuthModals, UserProfile } from './components/AuthModals';
-import { I18nProvider } from './i18n/I18nContext';
+import { I18nProvider, useTranslation } from './i18n/I18nContext';
 import { SEO } from './components/SEO';
 import { Loader2 } from 'lucide-react';
 
@@ -39,6 +39,7 @@ const PageLoader = () => (
 );
 
 function AppContent() {
+  const { t } = useTranslation();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [currentPage, setCurrentPage] = useState<PageRoute>('home');
   const [currentVersion, setCurrentVersion] = useState('v2.4');
@@ -171,29 +172,29 @@ function AppContent() {
       
       // Explore Our Topics & Main Nav Placeholders
       case 'api':
-        return <PlaceholderPage title="API Reference" description="We are currently compiling the comprehensive REST and GraphQL API documentation." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.api')} description={t('modules.apiDesc')} onGoHome={() => handleNavigate('home')} />;
       case 'changelog':
-        return <PlaceholderPage title="Product Changelog" description="The timeline of our latest features and security patches is being updated." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.changelog')} description={t('modules.changelogDesc')} onGoHome={() => handleNavigate('home')} />;
       case 'community':
-        return <PlaceholderPage title="Community Forum" description="The developer hub for discussions and support is launching soon." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.community')} description={t('modules.communityDesc')} onGoHome={() => handleNavigate('home')} />;
       case 'security':
-        return <PlaceholderPage title="Security & Compliance" description="Detailed SOC2, HIPAA, and GDPR compliance reports are being prepared." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.security.title')} description={t('modules.security.description')} onGoHome={() => handleNavigate('home')} />;
       case 'architecture':
-        return <PlaceholderPage title="System Architecture" description="Deep dive technical diagrams and whitepapers are coming soon." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.architecture')} description={t('modules.archDesc')} onGoHome={() => handleNavigate('home')} />;
       case 'datamodel':
-        return <PlaceholderPage title="Data Models" description="Schema definitions and ERD diagrams for the core platform." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.dataModel')} description={t('modules.dataDesc')} onGoHome={() => handleNavigate('home')} />;
       case 'integrations':
-        return <PlaceholderPage title="Integrations" description="Documentation for connecting Slack, Jira, and GitHub is in progress." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.integrations')} description={t('modules.intDesc')} onGoHome={() => handleNavigate('home')} />;
       case 'billing':
-        return <PlaceholderPage title="Billing & Plans" description="Manage your enterprise subscription and usage quotas." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.billing')} description={t('modules.billingDesc')} onGoHome={() => handleNavigate('home')} />;
       
       // Footer Link Placeholders -> Now Activated
       case 'features':
-        return <PlaceholderPage title="Platform Features" description="A complete breakdown of our enterprise capabilities is on the way." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.features')} description={t('modules.featDesc')} onGoHome={() => handleNavigate('home')} />;
       case 'enterprise':
-        return <PlaceholderPage title="Enterprise Solutions" description="Learn about our dedicated support, SLA, and private cloud options." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.enterprise')} description={t('modules.entDesc')} onGoHome={() => handleNavigate('home')} />;
       case 'help':
-        return <PlaceholderPage title="Help Center" description="Browse tutorials, FAQs, and troubleshooting guides." onGoHome={() => handleNavigate('home')} />;
+        return <PlaceholderPage title={t('modules.help')} description={t('modules.helpDesc')} onGoHome={() => handleNavigate('home')} />;
       
       // Activated Pages
       case 'about':
