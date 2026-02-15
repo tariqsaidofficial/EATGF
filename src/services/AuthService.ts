@@ -12,7 +12,17 @@ export interface UserProfile {
   createdAt?: string;
 }
 
+export interface ApiKey {
+  id: string;
+  name: string;
+  prefix: string;
+  key?: string; // Only returned once upon creation
+  createdAt: string;
+  lastUsed: string;
+}
+
 const STORAGE_KEY = 'nexus_user';
+const API_KEYS_STORAGE_KEY = 'nexus_api_keys';
 
 export const authService = {
   /**
@@ -132,5 +142,63 @@ export const authService = {
     // FUTURE: await supabase.auth.signOut()
     localStorage.removeItem(STORAGE_KEY);
     return Promise.resolve();
+  },
+
+  /**
+   * Get API Keys
+   */
+  getApiKeys: async (): Promise<ApiKey[]> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const stored = localStorage.getItem(API_KEYS_STORAGE_KEY);
+        resolve(stored ? JSON.parse(stored) : []);
+      }, 600);
+    });
+  },
+
+  /**
+   * Create API Key
+   */
+  createApiKey: async (name: string): Promise<ApiKey> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const keyString = 'eatgf_live_' + Array.from({length: 32}, () => Math.floor(Math.random() * 36).toString(36)).join('');
+        const newKey: ApiKey = {
+          id: 'key_' + Date.now(),
+          name,
+          prefix: keyString.substring(0, 10) + '...',
+          key: keyString, // Only returned here, not stored fully in db usually
+          createdAt: new Date().toISOString(),
+          lastUsed: 'Never'
+        };
+
+        const stored = localStorage.getItem(API_KEYS_STORAGE_KEY);
+        const keys = stored ? JSON.parse(stored) : [];
+        // In a real app, we wouldn't store 'key' in the DB, only a hash.
+        // For this mock, we store the object minus the full key to simulate that behavior
+        const keyToStore = { ...newKey, key: undefined }; 
+        
+        localStorage.setItem(API_KEYS_STORAGE_KEY, JSON.stringify([...keys, keyToStore]));
+        
+        resolve(newKey); // Return full key object to UI
+      }, 1000);
+    });
+  },
+
+  /**
+   * Revoke API Key
+   */
+  revokeApiKey: async (id: string): Promise<void> => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const stored = localStorage.getItem(API_KEYS_STORAGE_KEY);
+        if (stored) {
+          const keys = JSON.parse(stored);
+          const filtered = keys.filter((k: ApiKey) => k.id !== id);
+          localStorage.setItem(API_KEYS_STORAGE_KEY, JSON.stringify(filtered));
+        }
+        resolve();
+      }, 600);
+    });
   }
 };

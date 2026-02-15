@@ -1,7 +1,7 @@
 
-import React, { useState } from 'react';
-import { User, Mail, Shield, Lock, LogOut, Save, Star, Trash2, FileText, ArrowRight } from 'lucide-react';
-import { UserProfile, authService } from '../services/AuthService';
+import React, { useState, useEffect } from 'react';
+import { User, Mail, Shield, Lock, LogOut, Save, Star, Trash2, FileText, ArrowRight, Key, Plus, Copy, Check, AlertTriangle } from 'lucide-react';
+import { UserProfile, authService, ApiKey } from '../services/AuthService';
 
 export interface FavoriteItem {
   id: string; // The doc ID (e.g., 'intro', 'install')
@@ -25,9 +25,9 @@ export const Profile: React.FC<ProfileProps> = ({
   favorites, 
   onToggleFavorite 
 }) => {
-  const [activeTab, setActiveTab] = useState<'general' | 'security' | 'favorites'>('general');
+  const [activeTab, setActiveTab] = useState<'general' | 'security' | 'favorites' | 'api-keys'>('general');
   
-  // Form States
+  // General Form States
   const [name, setName] = useState(user?.name || '');
   const [email, setEmail] = useState(user?.email || '');
   
@@ -36,16 +36,33 @@ export const Profile: React.FC<ProfileProps> = ({
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  // API Key States
+  const [apiKeys, setApiKeys] = useState<ApiKey[]>([]);
+  const [isKeysLoading, setIsKeysLoading] = useState(false);
+  const [showCreateKey, setShowCreateKey] = useState(false);
+  const [newKeyName, setNewKeyName] = useState('');
+  const [newlyCreatedKey, setNewlyCreatedKey] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
-  if (!user) {
-    return (
-      <div style={{ padding: '6rem 2rem', textAlign: 'center', minHeight: '60vh' }}>
-        <h2 style={{ marginBottom: '1rem' }}>Please log in to view your profile.</h2>
-        <p style={{ color: 'var(--nexus-text-secondary)' }}>Your session may have expired.</p>
-      </div>
-    );
-  }
+  useEffect(() => {
+    if (activeTab === 'api-keys') {
+      loadApiKeys();
+    }
+  }, [activeTab]);
+
+  const loadApiKeys = async () => {
+    setIsKeysLoading(true);
+    try {
+      const keys = await authService.getApiKeys();
+      setApiKeys(keys);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsKeysLoading(false);
+    }
+  };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -61,6 +78,49 @@ export const Profile: React.FC<ProfileProps> = ({
         setIsLoading(false);
     }
   };
+
+  const handleCreateKey = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newKeyName) return;
+    setIsLoading(true);
+    try {
+      const key = await authService.createApiKey(newKeyName);
+      setNewlyCreatedKey(key.key || null);
+      setNewKeyName('');
+      setShowCreateKey(false);
+      loadApiKeys();
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleRevokeKey = async (id: string) => {
+    if (confirm("Are you sure you want to revoke this API key? This action cannot be undone and may break applications using this key.")) {
+      try {
+        await authService.revokeApiKey(id);
+        loadApiKeys();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  };
+
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  if (!user) {
+    return (
+      <div style={{ padding: '6rem 2rem', textAlign: 'center', minHeight: '60vh' }}>
+        <h2 style={{ marginBottom: '1rem' }}>Please log in to view your profile.</h2>
+        <p style={{ color: 'var(--nexus-text-secondary)' }}>Your session may have expired.</p>
+      </div>
+    );
+  }
 
   return (
     <main className="w-full" style={{ padding: '4rem 0', background: 'var(--nexus-bg-root)', minHeight: '90vh' }}>
@@ -117,6 +177,17 @@ export const Profile: React.FC<ProfileProps> = ({
                   }}
                 >
                   <Lock size={18} /> Security
+                </button>
+                <button 
+                  onClick={() => setActiveTab('api-keys')}
+                  style={{ 
+                    display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', 
+                    borderRadius: '8px', border: 'none', background: activeTab === 'api-keys' ? 'var(--nexus-bg-root)' : 'transparent',
+                    color: activeTab === 'api-keys' ? 'var(--nexus-primary)' : 'var(--nexus-text-secondary)', fontWeight: 500, cursor: 'pointer', textAlign: 'left',
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <Key size={18} /> API Keys
                 </button>
                 
                 <div style={{ height: 1, background: 'var(--nexus-border)', margin: '0.5rem 0' }}></div>
@@ -328,6 +399,184 @@ export const Profile: React.FC<ProfileProps> = ({
                   </div>
                 </div>
               </form>
+            )}
+
+            {activeTab === 'api-keys' && (
+              <div>
+                <h2 style={{ marginBottom: '0.5rem' }}>API Keys</h2>
+                <p style={{ color: 'var(--nexus-text-secondary)', marginBottom: '2rem' }}>
+                  Manage access tokens for your applications. Treat these like passwords.
+                </p>
+
+                {newlyCreatedKey && (
+                  <div style={{ 
+                    marginBottom: '2rem', padding: '1.5rem', 
+                    background: 'rgba(16, 185, 129, 0.08)', border: '1px solid rgba(16, 185, 129, 0.3)', 
+                    borderRadius: '12px'
+                  }}>
+                    <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '1rem' }}>
+                      <div style={{ 
+                        padding: '0.5rem', borderRadius: '50%', background: 'var(--nexus-success)', 
+                        color: 'white', height: 'fit-content' 
+                      }}>
+                        <Check size={20} />
+                      </div>
+                      <div>
+                        <h4 style={{ color: 'var(--nexus-success)', fontSize: '1.1rem', marginBottom: '0.25rem' }}>API Key Generated</h4>
+                        <p style={{ color: 'var(--nexus-text-secondary)', fontSize: '0.9rem' }}>
+                          Copy this key now. You won't be able to see it again!
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div style={{ 
+                      display: 'flex', gap: '0.5rem', background: 'var(--nexus-bg-surface)', 
+                      padding: '0.75rem', borderRadius: '8px', border: '1px solid var(--nexus-border)',
+                      marginBottom: '1rem'
+                    }}>
+                      <code style={{ 
+                        flex: 1, fontFamily: 'var(--font-mono)', fontSize: '0.9rem', 
+                        overflow: 'hidden', textOverflow: 'ellipsis', color: 'var(--nexus-text-primary)'
+                      }}>
+                        {newlyCreatedKey}
+                      </code>
+                      <button 
+                        onClick={() => copyToClipboard(newlyCreatedKey)}
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', color: copied ? 'var(--nexus-success)' : 'var(--nexus-text-secondary)' }}
+                        title="Copy to clipboard"
+                      >
+                        {copied ? <Check size={18} /> : <Copy size={18} />}
+                      </button>
+                    </div>
+
+                    <button 
+                      onClick={() => setNewlyCreatedKey(null)}
+                      style={{ 
+                        padding: '0.5rem 1rem', background: 'var(--nexus-success)', color: 'white',
+                        border: 'none', borderRadius: '6px', fontWeight: 600, cursor: 'pointer'
+                      }}
+                    >
+                      I have saved it
+                    </button>
+                  </div>
+                )}
+
+                {/* Create Key Button / Form */}
+                {!showCreateKey ? (
+                  <button 
+                    onClick={() => setShowCreateKey(true)}
+                    disabled={!!newlyCreatedKey}
+                    style={{ 
+                      display: 'flex', alignItems: 'center', gap: '0.5rem',
+                      padding: '0.75rem 1.25rem', background: 'var(--nexus-primary)', color: 'white',
+                      border: 'none', borderRadius: '8px', fontWeight: 600, cursor: !!newlyCreatedKey ? 'not-allowed' : 'pointer',
+                      marginBottom: '2rem', opacity: !!newlyCreatedKey ? 0.5 : 1
+                    }}
+                  >
+                    <Plus size={18} /> Generate New Key
+                  </button>
+                ) : (
+                  <form onSubmit={handleCreateKey} style={{ 
+                    marginBottom: '2rem', padding: '1.5rem', background: 'var(--nexus-bg-root)',
+                    borderRadius: '12px', border: '1px solid var(--nexus-border)'
+                  }}>
+                    <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: 500 }}>Key Name</label>
+                    <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+                      <input 
+                        type="text" 
+                        value={newKeyName}
+                        onChange={e => setNewKeyName(e.target.value)}
+                        placeholder="e.g. Production Server, CI/CD Pipeline"
+                        style={{ 
+                          flex: 1, padding: '0.75rem', borderRadius: '8px', 
+                          border: '1px solid var(--nexus-border)', outline: 'none',
+                          minWidth: '250px'
+                        }}
+                        autoFocus
+                      />
+                      <div style={{ display: 'flex', gap: '0.5rem' }}>
+                        <button 
+                          type="button"
+                          onClick={() => { setShowCreateKey(false); setNewKeyName(''); }}
+                          style={{ 
+                            padding: '0.75rem 1rem', background: 'transparent', color: 'var(--nexus-text-primary)',
+                            border: '1px solid var(--nexus-border)', borderRadius: '8px', fontWeight: 600, cursor: 'pointer'
+                          }}
+                        >
+                          Cancel
+                        </button>
+                        <button 
+                          type="submit"
+                          disabled={!newKeyName || isLoading}
+                          style={{ 
+                            padding: '0.75rem 1rem', background: 'var(--nexus-primary)', color: 'white',
+                            border: 'none', borderRadius: '8px', fontWeight: 600, cursor: 'pointer',
+                            display: 'flex', alignItems: 'center', gap: '0.5rem', opacity: !newKeyName ? 0.7 : 1
+                          }}
+                        >
+                          {isLoading ? 'Creating...' : 'Create Key'}
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                )}
+
+                {/* Keys List */}
+                <div style={{ 
+                  border: '1px solid var(--nexus-border)', borderRadius: '12px', 
+                  overflow: 'hidden', background: 'var(--nexus-bg-surface)' 
+                }}>
+                  <div style={{ 
+                    display: 'grid', gridTemplateColumns: '2fr 2fr 1.5fr 0.5fr', 
+                    padding: '1rem', background: 'var(--nexus-bg-root)', 
+                    borderBottom: '1px solid var(--nexus-border)',
+                    fontSize: '0.85rem', fontWeight: 600, color: 'var(--nexus-text-secondary)', textTransform: 'uppercase'
+                  }}>
+                    <div>Name</div>
+                    <div>Key Prefix</div>
+                    <div>Created</div>
+                    <div style={{ textAlign: 'right' }}>Action</div>
+                  </div>
+
+                  {isKeysLoading ? (
+                    <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--nexus-text-secondary)' }}>Loading keys...</div>
+                  ) : apiKeys.length === 0 ? (
+                    <div style={{ padding: '3rem', textAlign: 'center' }}>
+                      <Key size={32} style={{ color: 'var(--nexus-border)', marginBottom: '0.5rem' }} />
+                      <p style={{ color: 'var(--nexus-text-secondary)' }}>You don't have any API keys yet.</p>
+                    </div>
+                  ) : (
+                    apiKeys.map(key => (
+                      <div key={key.id} style={{ 
+                        display: 'grid', gridTemplateColumns: '2fr 2fr 1.5fr 0.5fr', 
+                        padding: '1rem', borderBottom: '1px solid var(--nexus-border)',
+                        alignItems: 'center', fontSize: '0.95rem'
+                      }}>
+                        <div style={{ fontWeight: 500 }}>{key.name}</div>
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--nexus-text-secondary)' }}>{key.prefix}</div>
+                        <div style={{ color: 'var(--nexus-text-secondary)', fontSize: '0.9rem' }}>
+                          {new Date(key.createdAt).toLocaleDateString()}
+                        </div>
+                        <div style={{ textAlign: 'right' }}>
+                          <button 
+                            onClick={() => handleRevokeKey(key.id)}
+                            style={{ 
+                              background: 'none', border: 'none', cursor: 'pointer', 
+                              color: 'var(--nexus-text-secondary)', padding: '0.5rem'
+                            }}
+                            title="Revoke Key"
+                          >
+                            <Trash2 size={16} className="hover-danger" />
+                          </button>
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+                <style>{`
+                  .hover-danger:hover { color: var(--nexus-danger) !important; }
+                `}</style>
+              </div>
             )}
 
           </div>
