@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database, Terminal, Cpu, Layout, Server, Box, Cloud, GitBranch, Lock, Activity, MessageSquare, CheckSquare } from 'lucide-react';
+import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database, Terminal, Cpu, Layout, Server, Box, Cloud, GitBranch, Lock, Activity, MessageSquare, CheckSquare, Rocket, Users, Building2, CheckCircle } from 'lucide-react';
 import { useTranslation } from '../i18n/I18nContext';
 
 interface HomeProps {
@@ -297,8 +297,109 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
         </div>
       </section>
 
-      {/* Integrations Ecosystem Section */}
+      {/* Governance & Guidelines Section (Replacing SaaS/PaaS) */}
       <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-surface)' }}>
+        <div className="container">
+            <div style={{ textAlign: 'center', marginBottom: '5rem' }}>
+                <span style={{ 
+                    color: 'var(--nexus-primary)', 
+                    fontWeight: 700, 
+                    letterSpacing: '1.5px', 
+                    textTransform: 'uppercase', 
+                    fontSize: '0.85rem',
+                    background: 'rgba(67, 97, 238, 0.1)',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '20px'
+                }}>
+                    Governance for All
+                </span>
+                <h2 style={{ fontSize: '2.5rem', marginTop: '1.5rem', fontWeight: 800 }}>Standardized Guidelines at Any Scale</h2>
+                <p style={{ color: 'var(--nexus-text-secondary)', maxWidth: '750px', margin: '1rem auto 0', fontSize: '1.1rem' }}>
+                    EATGF isn't a hosting provider. It's the comprehensive knowledge engine and rulebook that aligns your technical strategy, whether you're shipping your first MVP or managing a Fortune 500 infrastructure.
+                </p>
+            </div>
+
+            <div className="grid-3-col" style={{ alignItems: 'stretch', gap: '2rem' }}>
+                {/* Startups Card */}
+                <div className="card-modern" style={{ 
+                    background: 'linear-gradient(145deg, #ffffff 0%, #fef3c7 100%)', 
+                    border: '1px solid #fcd34d',
+                    position: 'relative', overflow: 'hidden'
+                }}>
+                    <div style={{ position: 'relative', zIndex: 2 }}>
+                        <div style={{ width: 50, height: 50, background: '#fbbf24', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', marginBottom: '1.5rem', boxShadow: '0 4px 6px rgba(251, 191, 36, 0.3)' }}>
+                            <Rocket size={28} />
+                        </div>
+                        <h3 style={{ fontSize: '1.5rem', marginBottom: '0.75rem', color: '#78350f' }}>Startups</h3>
+                        <p style={{ color: '#92400e', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                            Move fast with pre-built architectural patterns. Skip the bikeshedding and adopt industry-standard setups for CI/CD, Authentication, and Cloud structure from Day 1.
+                        </p>
+                        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#92400e', fontSize: '0.9rem' }}><CheckCircle size={16} /> MVP Boilerplates</li>
+                             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#92400e', fontSize: '0.9rem' }}><CheckCircle size={16} /> Lean Security Baselines</li>
+                        </ul>
+                    </div>
+                    {/* Abstract Visual */}
+                    <div style={{ position: 'absolute', bottom: -20, right: -20, opacity: 0.1 }}>
+                        <Rocket size={150} color="#fbbf24" />
+                    </div>
+                </div>
+
+                {/* Developers/Teams Card */}
+                <div className="card-modern" style={{ 
+                    background: 'linear-gradient(145deg, #ffffff 0%, #eff6ff 100%)', 
+                    border: '1px solid #bfdbfe',
+                    position: 'relative', overflow: 'hidden'
+                }}>
+                    <div style={{ position: 'relative', zIndex: 2 }}>
+                        <div style={{ width: 50, height: 50, background: '#3b82f6', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', marginBottom: '1.5rem', boxShadow: '0 4px 6px rgba(59, 130, 246, 0.3)' }}>
+                            <Users size={28} />
+                        </div>
+                        <h3 style={{ fontSize: '1.5rem', marginBottom: '0.75rem', color: '#1e3a8a' }}>Growing Teams</h3>
+                        <p style={{ color: '#1e40af', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                            Eliminate friction as you scale. Implement consistent coding standards, automated PR reviews, and unified documentation strategies across multiple squads.
+                        </p>
+                        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e40af', fontSize: '0.9rem' }}><CheckCircle size={16} /> Service Templates</li>
+                             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#1e40af', fontSize: '0.9rem' }}><CheckCircle size={16} /> API Style Guides</li>
+                        </ul>
+                    </div>
+                    {/* Abstract Visual */}
+                    <div style={{ position: 'absolute', bottom: -20, right: -20, opacity: 0.1 }}>
+                        <Users size={150} color="#3b82f6" />
+                    </div>
+                </div>
+
+                {/* Enterprise Card */}
+                <div className="card-modern" style={{ 
+                    background: 'linear-gradient(145deg, #f8fafc 0%, #1e293b 100%)', 
+                    border: '1px solid #334155',
+                    position: 'relative', overflow: 'hidden'
+                }}>
+                    <div style={{ position: 'relative', zIndex: 2 }}>
+                        <div style={{ width: 50, height: 50, background: '#6366f1', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', marginBottom: '1.5rem', boxShadow: '0 4px 6px rgba(99, 102, 241, 0.3)' }}>
+                            <Building2 size={28} />
+                        </div>
+                        <h3 style={{ fontSize: '1.5rem', marginBottom: '0.75rem', color: 'white' }}>Enterprise</h3>
+                        <p style={{ color: '#cbd5e1', marginBottom: '1.5rem', lineHeight: 1.6 }}>
+                            Rigorous control for regulated environments. Enforce policy-as-code, comprehensive audit trails, and multi-cloud governance frameworks.
+                        </p>
+                        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#cbd5e1', fontSize: '0.9rem' }}><CheckCircle size={16} /> Policy-as-Code (OPA)</li>
+                             <li style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: '#cbd5e1', fontSize: '0.9rem' }}><CheckCircle size={16} /> SOC2 & HIPAA Controls</li>
+                        </ul>
+                    </div>
+                    {/* Abstract Visual */}
+                    <div style={{ position: 'absolute', bottom: -20, right: -20, opacity: 0.1 }}>
+                        <Building2 size={150} color="#6366f1" />
+                    </div>
+                </div>
+            </div>
+        </div>
+      </section>
+
+      {/* Integrations Ecosystem Section */}
+      <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-root)', borderTop: '1px solid var(--nexus-border)' }}>
         <div className="container">
             <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
                 <span style={{ 
@@ -361,7 +462,7 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
       </section>
 
       {/* Trust/Support Section */}
-      <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-root)', borderTop: '1px solid var(--nexus-border)' }}>
+      <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-surface)', borderTop: '1px solid var(--nexus-border)' }}>
         <div className="container grid-2-col" style={{ gap: '5rem', alignItems: 'center' }}>
           <div>
              <h2 style={{ fontSize: 'clamp(2.25rem, 4vw, 3rem)', marginBottom: '1.5rem', lineHeight: 1.2 }}>
