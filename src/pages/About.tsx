@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Target, Heart, Globe, Users, Award, TrendingUp, Linkedin, Twitter } from 'lucide-react';
+import { Target, Heart, Globe, Users, Award, TrendingUp, Linkedin, Twitter, ExternalLink } from 'lucide-react';
 import { Note } from '../components/Callout';
 import { Tooltip } from '../components/Tooltip';
 
@@ -176,7 +176,7 @@ export const About: React.FC = () => {
       </section>
 
       {/* Leadership Section */}
-      <section style={{ padding: '6rem 0 6rem' }}>
+      <section style={{ padding: '6rem 0' }}>
         <div className="container">
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '3rem' }}>
              <div>
@@ -217,6 +217,74 @@ export const About: React.FC = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Strategic Partners Section */}
+      <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-surface)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Strategic Partners</h2>
+            <p style={{ color: 'var(--nexus-text-secondary)', maxWidth: '600px', margin: '0 auto' }}>
+              We collaborate with world-class agencies to define the future of digital governance.
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: '2rem' }}>
+            <a 
+              href="https://www.mwheba.com" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              style={{ 
+                display: 'flex', 
+                flexDirection: 'column', 
+                alignItems: 'center', 
+                padding: '2rem', 
+                background: 'var(--nexus-bg-root)', 
+                borderRadius: '16px', 
+                border: '1px solid var(--nexus-border)',
+                textDecoration: 'none',
+                transition: 'all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                width: '100%',
+                maxWidth: '300px',
+                cursor: 'pointer'
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.transform = 'translateY(-5px)';
+                e.currentTarget.style.boxShadow = 'var(--shadow-lg)';
+                e.currentTarget.style.borderColor = 'var(--nexus-primary)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = 'none';
+                e.currentTarget.style.borderColor = 'var(--nexus-border)';
+              }}
+            >
+              <div style={{ 
+                width: '64px', 
+                height: '64px', 
+                background: 'var(--nexus-bg-surface)', 
+                borderRadius: '16px', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                marginBottom: '1rem',
+                fontSize: '2rem',
+                fontWeight: 800,
+                color: 'var(--nexus-primary)',
+                boxShadow: 'var(--shadow-sm)'
+              }}>
+                M
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <h3 style={{ fontSize: '1.25rem', color: 'var(--nexus-text-primary)', margin: 0 }}>MWHEBA Agency</h3>
+                <ExternalLink size={14} color="var(--nexus-text-secondary)" />
+              </div>
+              <p style={{ color: 'var(--nexus-text-secondary)', textAlign: 'center', fontSize: '0.9rem', marginTop: '0.5rem', lineHeight: 1.5 }}>
+                Premier digital transformation partner specializing in enterprise growth.
+              </p>
+            </a>
           </div>
         </div>
       </section>
