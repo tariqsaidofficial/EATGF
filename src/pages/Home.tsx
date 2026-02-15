@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database, Terminal, Cpu } from 'lucide-react';
+import { ArrowRight, Search, Book, Code, Shield, Layers, Zap, Database, Terminal, Cpu, Layout, Server, Box, Cloud, GitBranch } from 'lucide-react';
 import { useTranslation } from '../i18n/I18nContext';
 
 interface HomeProps {
@@ -239,6 +239,64 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
         </div>
       </section>
 
+      {/* Tech Stack / Framework Profiles Section (Supported Ecosystem) */}
+      <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-root)', borderTop: '1px solid var(--nexus-border)', borderBottom: '1px solid var(--nexus-border)' }}>
+        <div className="container">
+          <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
+            <span style={{ 
+                 color: 'var(--nexus-accent)', 
+                 fontWeight: 700, 
+                 letterSpacing: '1.5px', 
+                 textTransform: 'uppercase', 
+                 fontSize: '0.85rem',
+                 background: 'rgba(114, 9, 183, 0.1)',
+                 padding: '0.5rem 1rem',
+                 borderRadius: '20px'
+             }}>
+                 Universal Compatibility
+             </span>
+            <h2 style={{ fontSize: '2.5rem', marginTop: '1.5rem', fontWeight: 800 }}>Supported Frameworks</h2>
+            <p style={{ color: 'var(--nexus-text-secondary)', maxWidth: '700px', margin: '1rem auto 0', fontSize: '1.1rem' }}>
+              EATGF provides out-of-the-box governance profiles, security baselines, and architectural patterns for your entire technology stack.
+            </p>
+          </div>
+
+          <div className="grid-2-col" style={{ gap: '2rem' }}>
+             {/* Frontend Profile */}
+             <FrameworkCard 
+                title="Frontend & Mobile" 
+                icon={<Layout size={24} />} 
+                color="blue"
+                items={['React', 'Vue.js', 'Angular', 'Next.js', 'React Native', 'Flutter', 'Svelte', 'Web Components', 'Tailwind CSS']}
+             />
+
+             {/* Backend Profile */}
+             <FrameworkCard 
+                title="Backend & API" 
+                icon={<Server size={24} />} 
+                color="purple"
+                items={['Node.js', 'Python (FastAPI/Django)', 'Go (Gin/Echo)', 'Java Spring Boot', '.NET Core', 'GraphQL', 'gRPC', 'PostgreSQL']}
+             />
+
+             {/* Infrastructure Profile */}
+             <FrameworkCard 
+                title="Infrastructure & Cloud" 
+                icon={<Cloud size={24} />} 
+                color="teal"
+                items={['AWS', 'Google Cloud', 'Azure', 'Kubernetes', 'Terraform', 'Pulumi', 'Helm', 'Istio', 'Prometheus']}
+             />
+
+             {/* DevOps Profile */}
+             <FrameworkCard 
+                title="DevOps & Security" 
+                icon={<GitBranch size={24} />} 
+                color="orange"
+                items={['Docker', 'GitHub Actions', 'GitLab CI', 'Jenkins', 'ArgoCD', 'SonarQube', 'Snyk', 'HashiCorp Vault']}
+             />
+          </div>
+        </div>
+      </section>
+
       {/* Trust/Support Section */}
       <section style={{ padding: '6rem 0', background: 'var(--nexus-bg-surface)' }}>
         <div className="container grid-2-col" style={{ gap: '5rem', alignItems: 'center' }}>
@@ -348,6 +406,45 @@ export const Home: React.FC<HomeProps> = ({ onNavigate, onSearch }) => {
     </main>
   );
 };
+
+// Helper Component for Framework Cards
+const FrameworkCard = ({ title, icon, color, items }: { title: string, icon: any, color: string, items: string[] }) => (
+  <div className="card-modern" style={{ borderTop: `4px solid var(--nexus-${color === 'teal' ? 'primary' : color === 'orange' ? 'warning' : color === 'purple' ? 'accent' : 'primary'})` }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem' }}>
+        <div className={`icon-wrapper bg-${color}-light`} style={{ marginBottom: 0, width: 50, height: 50 }}>
+            {icon}
+        </div>
+        <h3 style={{ fontSize: '1.25rem', margin: 0 }}>{title}</h3>
+    </div>
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+        {items.map((item, i) => (
+            <span key={i} style={{ 
+                padding: '0.35rem 0.85rem', 
+                background: 'var(--nexus-bg-root)', 
+                borderRadius: '6px', 
+                fontSize: '0.9rem', 
+                color: 'var(--nexus-text-secondary)',
+                border: '1px solid var(--nexus-border)',
+                fontWeight: 500,
+                transition: 'all 0.2s'
+            }}
+            onMouseEnter={e => {
+                e.currentTarget.style.background = `var(--nexus-${color === 'teal' ? 'primary' : color === 'orange' ? 'warning' : color === 'purple' ? 'accent' : 'primary'})`;
+                e.currentTarget.style.color = 'white';
+                e.currentTarget.style.borderColor = 'transparent';
+            }}
+            onMouseLeave={e => {
+                e.currentTarget.style.background = 'var(--nexus-bg-root)';
+                e.currentTarget.style.color = 'var(--nexus-text-secondary)';
+                e.currentTarget.style.borderColor = 'var(--nexus-border)';
+            }}
+            >
+                {item}
+            </span>
+        ))}
+    </div>
+  </div>
+);
 
 const DocCard: React.FC<{ icon: React.ReactNode, title: string, desc: string, color: string, onClick: () => void, btnText: string }> = ({ icon, title, desc, color, onClick, btnText }) => {
   return (
