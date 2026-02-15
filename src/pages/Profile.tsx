@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { User, Mail, Shield, Lock, LogOut, Save, Star, Trash2, FileText, ArrowRight } from 'lucide-react';
-import { UserProfile } from '../components/AuthModals';
+import { UserProfile, authService } from '../services/AuthService';
 
 export interface FavoriteItem {
   id: string; // The doc ID (e.g., 'intro', 'install')
@@ -47,11 +47,19 @@ export const Profile: React.FC<ProfileProps> = ({
     );
   }
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => setIsLoading(false), 1000);
+    
+    try {
+        await authService.updateProfile({ name, email });
+        // In a real app, you might trigger a global user refresh here
+        setIsLoading(false);
+        // alert("Profile updated"); 
+    } catch (e) {
+        console.error("Failed to update profile", e);
+        setIsLoading(false);
+    }
   };
 
   return (
@@ -73,6 +81,7 @@ export const Profile: React.FC<ProfileProps> = ({
                 />
                 <h3 style={{ fontSize: '1.1rem', marginBottom: '0.25rem', textAlign: 'center' }}>{user.name}</h3>
                 <p style={{ fontSize: '0.9rem', color: 'var(--nexus-text-secondary)' }}>Developer</p>
+                <span style={{ fontSize: '0.7rem', color: 'var(--nexus-text-secondary)', marginTop: '0.25rem' }}>ID: {user.id}</span>
               </div>
 
               <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>

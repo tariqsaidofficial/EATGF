@@ -8,7 +8,8 @@ import { MobileMenu } from './components/MobileMenu';
 import { SearchModal } from './components/SearchModal';
 import { FeedbackModal } from './components/FeedbackModal';
 import { ChatWidget } from './components/ChatWidget';
-import { AuthModals, UserProfile } from './components/AuthModals';
+import { AuthModals } from './components/AuthModals';
+import { authService, UserProfile } from './services/AuthService';
 import { I18nProvider, useTranslation } from './i18n/I18nContext';
 import { SEO } from './components/SEO';
 import { Loader2 } from 'lucide-react';
@@ -67,16 +68,13 @@ function AppContent() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
   
-  // Check for persisted user session
+  // Check for persisted user session via Service
   useEffect(() => {
-    const savedUser = localStorage.getItem('nexus_user');
-    if (savedUser) {
-      try {
-        setUser(JSON.parse(savedUser));
-      } catch (e) {
-        console.error("Failed to parse user session");
-      }
-    }
+    const initSession = async () => {
+      const currentUser = await authService.getCurrentUser();
+      setUser(currentUser);
+    };
+    initSession();
   }, []);
 
   // Handle Cmd+K for search
@@ -136,14 +134,13 @@ function AppContent() {
 
   const handleAuthSuccess = (userData: UserProfile) => {
     setUser(userData);
-    localStorage.setItem('nexus_user', JSON.stringify(userData));
     // Redirect to profile page after signup/login
     handleNavigate('profile');
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await authService.logout();
     setUser(null);
-    localStorage.removeItem('nexus_user');
     handleNavigate('home');
   };
 

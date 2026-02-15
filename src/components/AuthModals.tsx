@@ -1,12 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
 import { X, Mail, Lock, User, ArrowRight, Loader2, Github, ArrowLeft, CheckCircle } from 'lucide-react';
+import { authService, UserProfile } from '../services/AuthService';
 
-export interface UserProfile {
-  name: string;
-  email: string;
-  avatar?: string;
-}
+// Re-export UserProfile for backward compatibility with other components if needed, 
+// though best practice is to import from service.
+export type { UserProfile };
 
 interface AuthModalsProps {
   isOpen: boolean;
@@ -54,17 +53,17 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
 
   if (!isOpen) return null;
 
-  const handleSocialLogin = (provider: 'github' | 'google') => {
+  const handleSocialLogin = async (provider: 'github' | 'google') => {
     setIsLoading(true);
-    setTimeout(() => {
-       setIsLoading(false);
-       onAuthSuccess({
-            name: provider === 'github' ? 'GitHub User' : 'Google User',
-            email: `user@${provider}.com`,
-            avatar: `https://ui-avatars.com/api/?name=${provider}+User&background=${provider === 'github' ? '333' : 'DB4437'}&color=fff`
-       });
-       onClose();
-    }, 1500);
+    try {
+      const user = await authService.loginWithSocial(provider);
+      onAuthSuccess(user);
+      onClose();
+    } catch (err) {
+      setError('Social login failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleForgotPasswordSubmit = (e: React.FormEvent) => {
@@ -75,7 +74,7 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
     }
     setIsLoading(true);
     setError('');
-    // Simulate API
+    // Simulate API (Keep this mock in UI for now as it doesn't usually return a session)
     setTimeout(() => {
       setIsLoading(false);
       setResetSent(true);
@@ -87,36 +86,20 @@ export const AuthModals: React.FC<AuthModalsProps> = ({
     setError('');
     setIsLoading(true);
 
-    // Simulate API Network Latency
-    setTimeout(() => {
-      setIsLoading(false);
-      
+    try {
+      let user: UserProfile;
       if (mode === 'login') {
-        if (email && password) {
-          // Simulate successful login
-          onAuthSuccess({
-            name: 'Demo User',
-            email: email,
-            avatar: `https://ui-avatars.com/api/?name=Demo+User&background=4361EE&color=fff`
-          });
-          onClose();
-        } else {
-          setError('Invalid credentials');
-        }
+        user = await authService.login(email, password);
       } else {
-        if (name && email && password) {
-          // Simulate successful signup
-          onAuthSuccess({
-            name: name,
-            email: email,
-            avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=4361EE&color=fff`
-          });
-          onClose();
-        } else {
-          setError('Please fill in all fields');
-        }
+        user = await authService.signup(name, email, password);
       }
-    }, 1500);
+      onAuthSuccess(user);
+      onClose();
+    } catch (err: any) {
+      setError(err.message || 'Authentication failed');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
