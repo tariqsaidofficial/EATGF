@@ -44,10 +44,9 @@ export const Navbar: React.FC<NavbarProps> = ({
   const { t, language, setLanguage } = useTranslation();
 
   const versions = [
-    { label: 'v2.4', tag: 'Latest' },
-    { label: 'v2.3', tag: 'Stable' },
-    { label: 'v1.5', tag: 'Legacy' },
-    { label: 'Next', tag: 'Beta' },
+    { label: 'v1.0', tag: 'Stable' },
+    { label: 'v1.1', tag: 'Beta' },
+    { label: 'v0.9', tag: 'Legacy' },
   ];
 
   const languages = [

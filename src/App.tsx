@@ -43,7 +43,7 @@ function AppContent() {
   const { t } = useTranslation();
   const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [currentPage, setCurrentPage] = useState<PageRoute>('home');
-  const [currentVersion, setCurrentVersion] = useState('v2.4');
+  const [currentVersion, setCurrentVersion] = useState('v1.0');
   
   // Doc State
   const [activeDoc, setActiveDoc] = useState('intro');
