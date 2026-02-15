@@ -80,7 +80,12 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
           gap: '1rem',
           fontSize: '0.875rem'
         }}>
-          <div>© {new Date().getFullYear()} EATGF Inc. All rights reserved.</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+             <div>© 2026 EATGF Inc. All rights reserved.</div>
+             <div style={{ fontSize: '0.8rem', opacity: 0.9 }}>
+               Built with ❤️ by <a href="https://portfolio.dxbmark.com" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Tariq Said</a>
+             </div>
+          </div>
           <div style={{ display: 'flex', gap: '1.5rem' }}>
              <a href="#" onClick={(e) => handleLinkClick('privacy', e)} style={{ color: 'inherit' }}>{t('nav.privacy')}</a>
              <a href="#" onClick={(e) => handleLinkClick('terms', e)} style={{ color: 'inherit' }}>{t('nav.terms')}</a>
